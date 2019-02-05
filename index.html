@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/style.css"/>
+    <link rel="stylesheet" media="screen and (max-width: 480px)" href="./css/phone.css"/>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+   	<script src='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+		<link href='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+
+	<title>LeVélo - Marseille</title>
+</head>
+
+<body>
+
+<blockquote class="blockquote text-center">
+  <h1>
+	 LeVélo
+	 <small class="text-muted"> - Marseille</small>
+  </h1>
+</blockquote>
+
+<!--NAVBAR-->
+
+  <!-- Navbar content -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="navbar-text" tabindex="-1"><div ="decompteTimerBar"></div></a>
+    </div>
+  </div>
+</nav>
+
+<!--/NAVBAR-->
+
+                    <!--Slider-->
+
+<div span ="slider">
+  <a div ="explicationResa" class="trigger_popup_slider">Comment réserver ?</a>
+  <div class="hover_bkgr_slider">
+    <span class="helper_slider"></span>
+    <div>
+        <div class="popupCloseButton_slider">X</div>
+            <img class="mySlides" src="./images/velo1.jpg">
+            <img class="mySlides" src="./images/velo2.jpg">
+            <img class="mySlides" src="./images/velo3.jpg">
+            <img class="mySlides" src="./images/velo4.jpg">
+            <!--Boutons du slider-->
+            <button type="button" id="button_left" class="btn btn-primary btn-sm"><</button>
+            <button type="button" id="button_right" class="btn btn-primary btn-sm">></button>
+
+    </div>
+  </div>
+</div>
+
+
+  </ul>
+</nav>
+<!--/Boutons du slider-->
+                    <!--/Slider-->
+<div id = "mapInfo">
+<div id = "mapid"></div> <!--affichage map-->
+      <div id="infoStation"> <!-- Cadre informations sur la station sélectionnée -->
+
+          <h2>Informations sur la station</h2>
+
+                    <!-- Informations sur la station sélectionnée -->
+              <ul id="listeInfo">
+                 <li>Nom : <span id="nomStation"> <!-- Nom inséré en Javascript --> </span></li>
+                  <li>Adresse : <span id="adresseStation"> <!-- Adresse insérer en Javascript --> </span></li>
+                  <li>Etat : <span id="etatStation"> <!-- État inséré en Javascript --> </span></li>
+                  <li>Vélos disponibles : <span id="veloDispo"> <!-- Nombre inséré en Javascript --> </span></li>
+                  <li>Points d'attache disponibles : <span id="attacheDispo"> <!-- Nombre inséré en Javascript --> </span></li>
+              </ul>
+        <!--<div id="canvasDiv"></div>-->
+            <div id="canvas">
+               <canvas class="roundCorners" id="newSignature"
+                style="position: relative; margin: 0; padding: 0; border: 1px solid #c4caac;"></canvas>
+
+
+                <button type="button" onclick="myCanvas.signatureClear()">Clear signature</button>
+            </div>
+<p class="demoToolList"><button type="button" id="clearCanvasSimple" class="btn btn-outline-primary">Annuler</button></p>
+
+
+<button type="button" id = "signUp" class="btn btn-primary">Inscription</button>
+        </div>
+
+ </div>                   <!-- /Informations sur la station sélectionnée -->
+
+
+<!--POP UP-->
+<a class="trigger_popup_fricc"></a>
+
+<div class="hover_bkgr_fricc">
+    <span class="helper"></span>
+    <div id = "formulaire">
+        <div class="popupCloseButton">X</div>
+        	<h3>Inscription</h3>
+        	<form method="get">
+   			<p>Nom <input type="text" name="Nom" id ="Formnom"/></p>
+        <span id="missNom"></span><br>
+   			<p>Prénom <input type="text" name="Prenom" id ="Formprenom"/></p>
+        <span id="missPrenom"></span><br>
+   			<button type="button" id ="valid" class="btn btn-primary">Valider</button>
+			</form>
+    </div>
+</div>
+<!--/POPUP-->
+
+<section class ="fctIcons">
+  <img class="icon" src="./images/green_icon.png">
+  <img class="icon" src="./images/orange_icon.png">
+  <img class="icon" src="./images/red_icon.png">
+</section>
+
+<section class = "comment_icons">
+  <p class = "cmt">vélos disponibles</p>
+  <p class ="cmt">Reste moins de x vélos</p>
+  <p class ="cmt">velos indisponibles ou station fermée</p>
+</section>
+
+<footer>
+  <section id = "selectionStation"></section> <div id="timer"></div>
+
+  <div id ="nous_suivre">
+    <h3>Nous suivre</h3>
+    <img src="https://img.icons8.com/color/50/000000/twitter.png">
+    <img src="https://img.icons8.com/color/48/000000/facebook.png">
+    <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
+  </div>
+<p> Ville de Marseille - Tous droits réservés </p>
+</footer>
+
+
+    <!--Script JS-->
+
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="./javascript/slider/slider_obj.js"></script>
+	<script type="text/javascript" src="./javascript/ajax/ajax.js"></script>
+	<script type="text/javascript" src="./javascript/leaflet.js"></script>
+	<script type="text/javascript" src="./javascript/testcanvas.js"></script>
+  <script type="text/javascript" src="./javascript/countdownObj.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+                    <!--Script JS-->
+
+</body>
+</html>

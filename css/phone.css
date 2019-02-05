@@ -1,0 +1,59 @@
+#mapid 
+{ 
+	height : 600px;
+	width: 90%;
+	margin-left:5%;
+}
+.slider > #explicationResa
+{
+    margin-left : 22%;
+
+}
+
+.trigger_popup_slider 
+{
+	
+	border : black 1px solid;
+	width : 90%;
+	text-align : center;
+	margin-left : 5%;
+	background-color: grey; 
+
+}
+#infoStation
+{
+    display : none;
+    width: 90%;
+    margin-left:5%;
+    background-color: #f8f9fa;
+    border : 1px solid black;
+    border-radius: 0x;
+    padding-top:2%;
+}
+
+#infoStation > h2
+
+{
+	font-size : 1.3em;
+}
+
+#canvas 
+{
+	border : 1px solid black;
+    width : 95%;
+
+}
+
+#signUp
+{
+	display : none;
+    margin-left:25%;
+}
+.fctIcons
+{
+	display : none;
+}
+
+.comment_icons {
+	display : none;
+}
