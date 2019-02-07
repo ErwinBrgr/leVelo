@@ -1,17 +1,20 @@
 var myCanvas = {
+        canvasWidth : "320px", //définition largeur
+        canvasHeight : "220px", //définition hauteur canvas
         drawing: false,
         mousePos: {
-          x: 0,
-          y: 0
+          clickX: 0,
+          clickY: 0
         },
+        clickDrag : new Array(),
         radius: 2,
         canvas: document.getElementById("newSignature"),
 
-
+/*
         style: function () {
             ctx.strokeStyle = "#222222";
-            ctx.lineWith = 2;
-        },
+            ctx.lineWith = 10;
+        },*/
 
          lastPos: function () {
             var lastPos = myCanvas.mousePos
@@ -19,6 +22,7 @@ var myCanvas = {
         mouseDown: function () {
             this.canvas.addEventListener("mousedown", function (e) {
                 myCanvas.drawing = true;
+                redraw()
                 myCanvas.lastPos = myCanvas.getMousePos(myCanvas.canvas, e);
             }, false);
         },
@@ -109,8 +113,31 @@ var myCanvas = {
             }, false);
         },
 
+
+        redraw : function() // gestion du style de trait
+        {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the canvas
+        ctx.strokeStyle = "#000000"; //couleur
+        ctx.lineJoin = "round"; // "style du trait"
+        ctx.lineWidth = 5; // épaisseur du trait
+
+
+        for(var i=0; i < clickX.length; i++) {
+            ctx.beginPath();
+            if(this.clickDrag[i] && i){
+              ctx.moveTo(clickX[i-1], clickX[i-1]);
+             }else{
+              ctx.moveTo(clickX[i]-1, clickX[i]);
+             }
+             ctx.lineTo(clickX[i], clickX[i]);
+             ctx.closePath();
+             ctx.stroke();
+        }
+
+    },
+
         signatureClear : function(){
-          this.ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         }
 
 
@@ -120,6 +147,8 @@ window.requestAnimFrame = (function (callback) {
         window.setTimeout(callback, 1000 / 60);
     };
 })();
+myCanvas.canvas.setAttribute('width',myCanvas.canvasWidth);
+myCanvas.canvas.setAttribute('height', myCanvas.canvasHeight);
 var ctx = myCanvas.canvas.getContext("2d");
 myCanvas.mouseDown();
 myCanvas.mouseUp();
@@ -128,3 +157,15 @@ myCanvas.touchStart();
 myCanvas.touchEnd();
 myCanvas.touchMove();
 myCanvas.drawLoop();
+
+  $('#canvas').on('click', function(){
+        document.getElementById('signUp').style.display = "block";
+        });
+$('#clearCanvasSimple').mousedown(function(e)
+  {
+    myCanvas.clickX = new Array();
+    myCanvas.clickY = new Array();
+    myCanvas.clickDrag = new Array();
+    myCanvas.redraw();
+    document.getElementById('signUp').style.display = "none";
+});
