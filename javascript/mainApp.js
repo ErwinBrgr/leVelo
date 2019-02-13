@@ -1,19 +1,19 @@
 MapObj = {
 
-//token : "43ca35bbc25b63d176479f8846a2026bb7f0175f",
+token : "43ca35bbc25b63d176479f8846a2026bb7f0175f",
 urlapi : "https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey=43ca35bbc25b63d176479f8846a2026bb7f0175f",//+this.token,
 latitude : 43.275070,
 longitude : 5.379264,
 zoom : 13,
-greenIcon : './images/green_icon.png',
-redIcon : './images/red_icon.png',
-orangeIcon : './images/orange_icon.png',
+green : './images/green_icon.png',
+red : './images/red_icon.png',
+orange : './images/orange_icon.png',
 //markers : new L.MarkerClusterGroup(),
 
 
 recupPoints : function() {
 
-var mymap = L.map('mapid').setView([MapObj.latitude, MapObj.longitude], MapObj.zoom);
+var mymap = L.map('mapid').setView([this.latitude, this.longitude], this.zoom);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -35,9 +35,9 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     }
 });
  //création de variables pour stackage des 3 différentes icônes (verte, orange, rouge)
-    var greenIcon = new LeafIcon({iconUrl: MapObj.greeIcon}),
-    redIcon = new LeafIcon({iconUrl: MapObj.redIcon}),
-    orangeIcon = new LeafIcon({iconUrl: MapObj.orangeIcon});
+    var greenIcon = new LeafIcon({iconUrl: './images/green_icon.png'}),
+    redIcon = new LeafIcon({iconUrl: './images/red_icon.png'}),
+    orangeIcon = new LeafIcon({iconUrl: './images/orange_icon.png'});
 
     L.icon = function (options) {
     return new L.Icon(options);
@@ -60,15 +60,15 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
             //condition pour couleur du marker. si nb vélo sup à 5 afichage du markeur en vert
         if (station.available_bikes >= 5) {
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: MapObj.greenIcon});
+        var marker =L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
         station_status = "Ouvert"} //idement mais affichage en orange
         else if(station.status = "OPEN" && station.available_bikes <= 4 ) {
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: MapObj.orangeIcon});
+        var marker =L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
         station_status = "Ouvert"}else if (station.available_bikes === 0) { //si 0 marker eu rouge
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: MapObj.redIcon});
+        var marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
         }
         else { //si aucune conditon remplie : rouge
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: MapObj.redIcon});
+        var marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
         };
 
 
@@ -106,7 +106,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
             }else{
             marker.on('click', displayPanel1); //gestion du click sur le marker pour affichage des informations (via fonction display)
             }
-}
+		}
 $(window).resize(resizePage);
 resizePage(); // Appel de la fonction à l'affichage de la page.
 
@@ -116,10 +116,10 @@ resizePage(); // Appel de la fonction à l'affichage de la page.
     }); // Fin for Each
 
 mymap.addLayer(markers);
-});
+});//fin AjaxGet
       
 
-} // fin ForEach;
+	},//Fin méthode
 
 
 
