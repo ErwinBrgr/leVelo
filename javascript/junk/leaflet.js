@@ -1,14 +1,5 @@
-MapObj = {
+var mymap = L.map('mapid').setView([43.275070, 5.379264], 13); // stockage carte dans div avec gestion de la position dans la ville de Rouen
 
-token : "43ca35bbc25b63d176479f8846a2026bb7f0175f",
-urlapi : "https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey=43ca35bbc25b63d176479f8846a2026bb7f0175f",//+this.token,
-latitude : 43.275070,
-longitude : 5.379264,
-zoom : 13,
-
-recupPoints : function() {
-
-var mymap = L.map('mapid').setView([this.latitude, this.longitude], this.zoom);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -16,7 +7,10 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1IjoiZXJ3aW5icmdyIiwiYSI6ImNqbnQ1czl6cTBvYWEzcHBqOXBkMDB2bzcifQ.YfJ2wPJux8VPSoLBbXMgLA'
 }).addTo(mymap);
 
-	ajaxGet(this.urlapi, function (reponse) {
+var token = "43ca35bbc25b63d176479f8846a2026bb7f0175f";
+var urlapi = "https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey="+token ;
+
+ajaxGet(urlapi, function (reponse) {
     // Transforme la réponse en un tableau d'articles
     var stations = JSON.parse(reponse);
     console.log(stations);
@@ -101,7 +95,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
             }else{
             marker.on('click', displayPanel1); //gestion du click sur le marker pour affichage des informations (via fonction display)
             }
-		}
+}
 $(window).resize(resizePage);
 resizePage(); // Appel de la fonction à l'affichage de la page.
 
@@ -111,14 +105,10 @@ resizePage(); // Appel de la fonction à l'affichage de la page.
     }); // Fin for Each
 
 mymap.addLayer(markers);
-});//fin AjaxGet
-      
-
-	},// fin 1
-
-valid : function(){
-$(function() {
-			sessionStorage.setItem("nomStation", $("#nomStation").html());
+});
+        /*Création fonction "valid" gérant validation formulaire*/
+        valid = function () {
+            sessionStorage.setItem("nomStation", $("#nomStation").html());
             //déclaration variables reprenant informations nécessaires à la réservation
             var nom = $("#Formnom").val();
             var prenom = $("#Formprenom").val();
@@ -134,55 +124,45 @@ $(function() {
             	if($.trim(nom) === ''){
             		missNom.show();
                 	missNom.text("Nom manquant");
-                	missNom.css('color','red');
+                	missNom.css('color','red');   
             	}
             	if ($.trim(prenom) === ''){
                 	missPrenom.show()
                 	missPrenom.text("Prénom manquant");
                 	missPrenom.css('color','red');
             }
-
+           
         }else{
                 //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
                 sessionStorage.setItem("Formprenom", $("#Formprenom").val());
                 sessionStorage.setItem("Formnom", $("#Formnom").val());
-
-               $('#selectionStation').html("Réservation à la station "
-                + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
-                +" "
+               
+                $('#selectionStation').html("Réservation à la station " 
+                + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom") 
+                +" " 
                 + sessionStorage.getItem("Formnom"));
- 				CountDownObj.timer(sessionStorage.getItem("distance"));
+
                  saisieValid = true;
             	}
-
+        	
 
             return saisieValid;
-        });
 
-}, //fin2
-
-}; //fin obj
-
-
-MapObj.recupPoints();
-
-
+        };
 
 $(function() {
-   /* //On vérifie l'existence d'une variable de session
+    //On vérifie l'existence d'une variable de session
     if(sessionStorage.getItem("nomStation") == null) {
-        $("#selectionStation").html("Pas de réservation en cours");
+        //console.log("Pas de résa");
     } else {
-            console.log("il y a une résa " + sessionStorage.getItem("nomStation"));
-            $("#selectionStation").html("<p>Réservation à la station</p> "
-                + sessionStorage.getItem("nomStation")
-                +" pour " + sessionStorage.getItem("Formprenom")
-                +" "
+            //console.log("il y a une résa " + sessionStorage.getItem("nomStation"));
+            $("#selesctionStation").html("<p>Réservation à la station</p> " + sessionStorage.getItem("nomStation")
+                +" pour " + sessionStorage.getItem("Formprenom") 
+                +" " 
                 + sessionStorage.getItem("Formnom"));
-            console.log(sessionStorage.getItem("distance"));
+            //console.log(sessionStorage.getItem("distance"));
             CountDownObj.timer(sessionStorage.getItem("distance"));
-    };
-
+    }
 
             $("#clearCanvasSimple").on('click', function(){
                 console.log(sessionStorage.getItem("nomStation"));
@@ -190,15 +170,15 @@ $(function() {
                 console.log(sessionStorage.getItem("nomStation"));
             });
 
-*/
+
 //gestion pop up pour la réservation. Ouverture au clic de la validation du canvas
   $('#signUp').click(function(){
        $('.hover_bkgr_fricc').show();
     });
 
-  //lancement de la fonction "valid" reprise plus haut
+  //lancement de la fonction "valid" reprise plus haut 
     $('#valid').click(function(){
-       if( MapObj.valid() ){
+       if( valid() ){
             CountDownObj.timer();
             $('.hover_bkgr_fricc').html('<p>Réservation prise en compte !</p>');
             $('.hover_bkgr_fricc').fadeOut(3000, function() {
@@ -206,7 +186,7 @@ $(function() {
             });
 
        }
-
+               
     });
 
     $('.popupCloseButton').click(function(){
