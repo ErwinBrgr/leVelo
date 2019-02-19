@@ -20,39 +20,16 @@
 
 <blockquote class="blockquote text-center">
   <h1>
-	 LeVélo
-	 <small class="text-muted"> - Marseille</small>
+	 LeVélo - Marseille</small>
   </h1>
 </blockquote>
-
-<!--NAVBAR-->
-
-  <!-- Navbar content -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Features</a>
-      <a class="nav-item nav-link" href="#">Pricing</a>
-      <a class="navbar-text" tabindex="-1"><div ="decompteTimerBar"></div></a>
-    </div>
-  </div>
-</nav>
 
 <!--/NAVBAR-->
 
                     <!--Slider-->
 
 <div span ="slider">
-  <a div ="explicationResa" class="trigger_popup_slider">Comment réserver ?</a>
-  <div class="hover_bkgr_slider">
-    <span class="helper_slider"></span>
-    <div>
-        <div class="popupCloseButton_slider">X</div>
+
             <img class="mySlides" src="./images/velo1.jpg">
             <img class="mySlides" src="./images/velo2.jpg">
             <img class="mySlides" src="./images/velo3.jpg">
@@ -60,17 +37,19 @@
             <!--Boutons du slider-->
             <button type="button" id="button_left" class="btn btn-primary btn-sm"><</button>
             <button type="button" id="button_right" class="btn btn-primary btn-sm">></button>
+            <button class="stop">| |</button>
+            <button class="play">&gt;&gt;</button>
 
-    </div>
-  </div>
+
 </div>
 
 
   </ul>
 
 <!--/Boutons du slider-->
-
-<div id = "selectionStation">  </div> <div id="timer"></div>
+<section id="booked">
+<div id = "selectionStation"></div><div id="timer"></div>
+</section>
                     <!--/Slider-->
 <div id = "mapInfo">
 <div id = "mapid"></div> <!--affichage map-->
@@ -149,9 +128,9 @@
   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-	<script type="text/javascript" src="./javascript/slider/slider_obj.js"></script>
+	<script type="text/javascript" src="./javascript/slider_obj.js"></script>
 	<script type="text/javascript" src="./javascript/ajax/ajax.js"></script>
-	<script type="text/javascript" src="./javascript/mapApp.js"></script>
+	<script type="text/javascript" src="./javascript/mainApp.js"></script>
 	<script type="text/javascript" src="./javascript/canvasF.js"></script>
   <script type="text/javascript" src="./javascript/countdownObj.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
