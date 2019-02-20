@@ -29,13 +29,13 @@
                     <!--Slider-->
     <section id="slider">
         <div class="container">
-            <h2>Comment l'utiliser ?</h2>
+            <h2>Vous cherchez un vélo ? Voila comment cela fonctionne ?</h2>
             <div class="mySlides">
                 <div><img src="images/velo1.jpg" alt="capture écran etape 1">
                 </div>
                 <div>
                     <h3><span>Etape 1</span></h3>
-                    <p>Des marqueurs indiquent le nombre de stations présentes dans un périmètre donné. Zoomer ou cliquer sur un marqueur pour voir les stations</p>
+                    <p>3 différentes icones indiquent la disponibilités et le nombre de vélos restants./p>
                 </div>
             </div>
             <div class="mySlides">
@@ -43,7 +43,7 @@
                 </div>
                 <div>
                     <h3><span>Etape 2</span></h3>
-                    <p>Cliquer sur une station pour en avoir les détails dans le panneau d'informations (adresse de la station, nombre de vélos disponibles)</p>
+                    <p>Pour connaitre l'état et le nombre de vélos, cliquez sur une icône sur la carte</p>
                 </div>
             </div>
             <div class="mySlides">
@@ -51,7 +51,7 @@
                 </div>
                 <div>
                     <h3><span>Etape 3</span></h3>
-                    <p>Dans le panneau "Détails de la station" à droite de la carte, cliquer sur "Réserver" afin d'ouvrir le panneau de réservation</p>
+                    <p>Dans le panneau "Informations sur la station" à droite de la carte, cliquer sur "Réserver" afin d'ouvrir le panneau de réservation</p>
                 </div>
             </div>
             <div class="mySlides">
@@ -71,10 +71,14 @@
                 </div>
             </div>
         </div>
-        <button class="next">&gt;</button>
-        <button class="prev">&lt;</button>
-        <button class="stop">| |</button>
-        <button class="play">&gt;&gt;</button>
+
+        <div id="btn_instructions">
+
+          <button id="button_left" class="prev"><img src ="images/left-arrow.png"></button>
+          <button class="stop"><img src="images/pausebtn.png"></button">
+          <button class="play"> <img src="images/playbtn.png"></button>
+           <button id="button_right" class="next"><img src ="images/next.png"></button>
+        </div>
     </section>
 
     <!--slider-->
@@ -125,7 +129,7 @@
         <span id="missNom"></span><br>
    			<p>Prénom <input type="text" name="Prenom" id ="Formprenom"/></p>
         <span id="missPrenom"></span><br>
-   			<button type="button" id ="valid" class="btn btn-primary">Valider</button>
+   			<button type="button" id ="valid" class="btn btn-primary">Réserver</button>
 			</form>
     </div>
 </div>
@@ -144,7 +148,7 @@
 </section>
 
 <footer>
-  
+
 
   <div id ="nous_suivre">
     <h3>Nous suivre</h3>
@@ -154,7 +158,6 @@
   </div>
 <p> Ville de Marseille - Tous droits réservés </p>
 </footer>
-
 
     <!--Script JS-->
 
