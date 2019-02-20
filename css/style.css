@@ -1,16 +1,24 @@
+body
+{
+    background-color: rgb(239, 239, 239);
+}
+
 h1
 {
-    background-color: rgb(69,123,216); 
+    background-color: rgb(69,123,216);
     text-align:center;
     vertical-align: middle;
     white-space: nowrap;
     height: 1.6em;
     color : white;
 }
-#mapid 
-{ 
-	height : 700px;
-	width: 100%;
+#mapid
+{
+	height : 640px;
+	width: 90%;
+    margin-left : 5%;
+    border: solid black 1px;
+    border-radius:20px;
 }
 
 #infoStation
@@ -63,9 +71,9 @@ h1
 
 .roundCorners
 {
-    position: relative; 
-    margin: 0; 
-    padding: 0; 
+    position: relative;
+    margin: 0;
+    padding: 0;
     border: 1px solid #c4caac;
 }
 
@@ -92,7 +100,7 @@ h1
     display:inline-block;
     height:100%;
     vertical-align:middle;
-    
+
 }
 .hover_bkgr_slider > div {
     top:30%;
@@ -140,7 +148,7 @@ h1
 
 .trigger_popup_slider:hover
 {
-    background-color: rgb(69,123,216); 
+    background-color: rgb(69,123,216);
 }
 /* Popup box BEGIN */
 
@@ -248,7 +256,7 @@ footer > p
 
 }
 
-#formulaire 
+#formulaire
 {
    width : 90%;
 }
@@ -263,7 +271,15 @@ footer > p
 .container {
     margin: 0 auto;
     max-width: 900px;
+
 }
+
+
+/*.play
+{
+    width : 10px;
+    height : 10px;
+}*/
 
 
 /* Tutorial titles */
@@ -374,27 +390,10 @@ footer > p
     cursor: pointer;
 }
 
-.prev {
-    position: absolute;
-    top: 45%;
-}
-
-.next {
-    position: absolute;
-    right: 0;
-    top: 45%;
-}
-
-.stop {
-    position: absolute;
-    left: 45%;
-    bottom: 80px;
-}
-
-.play {
-    position: absolute;
-    right: 45%;
-    bottom: 80px;
+#btn_instructions
+{
+    position: absolute ;
+    left : 44%;
 }
 
 @media screen and (max-width: 700px) {
