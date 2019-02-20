@@ -112,7 +112,7 @@ resizePage(); // Appel de la fonction à l'affichage de la page.
 
 mymap.addLayer(markers);
 });//fin AjaxGet
-      
+
 
 	},// fin 1
 
@@ -169,7 +169,7 @@ MapObj.recupPoints();
 
 
 $(function() {
-   /* //On vérifie l'existence d'une variable de session
+   //On vérifie l'existence d'une variable de session
     if(sessionStorage.getItem("nomStation") == null) {
         $("#selectionStation").html("Pas de réservation en cours");
     } else {
@@ -190,7 +190,7 @@ $(function() {
                 console.log(sessionStorage.getItem("nomStation"));
             });
 
-*/
+
 //gestion pop up pour la réservation. Ouverture au clic de la validation du canvas
   $('#signUp').click(function(){
        $('.hover_bkgr_fricc').show();
