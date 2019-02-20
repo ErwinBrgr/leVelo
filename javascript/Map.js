@@ -5,18 +5,19 @@ var Map = {
 	latitude : 43.275070,
 	longitude : 5.379264,
 	zoom : 13,
+	mymap : null,
 
 
 //methods
 
 	mapMethod : function(){
-		var mymap = L.map('mapid').setView([this.latitude, this.longitude], this.zoom);
+		this.mymap = L.map('mapid').setView([this.latitude, this.longitude], this.zoom);
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 		    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		    maxZoom: 18,
 		    id: 'mapbox.streets',
 		    accessToken: 'pk.eyJ1IjoiZXJ3aW5icmdyIiwiYSI6ImNqbnQ1czl6cTBvYWEzcHBqOXBkMDB2bzcifQ.YfJ2wPJux8VPSoLBbXMgLA'
-		}).addTo(mymap);
+		}).addTo(this.mymap);
 
 	},
 
@@ -71,7 +72,7 @@ var Map = {
         markers.addLayer(marker);
 
     }); //fin for each boucle pour ajout des points sur la carte
-	Map.mapMethod().mymap.addLayer(markers);
+	Map.mymap.addLayer(markers);
 		});//méthode ajax get
 
 	},//fin méthode récup
@@ -156,7 +157,8 @@ $(function() {
 	}, //fin2	
 
 };
-
+//Map.displaysM();
 Map.mapMethod();
 Map.getMarkers();
+Map.valid();
 
