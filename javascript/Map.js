@@ -1,3 +1,7 @@
+/* ------------------------------------------------------------------------------ */
+/* --                            MAP                                           -- */
+/* ------------------------------------------------------------------------------ */
+
 var Map = {
 //properties
 	token : "43ca35bbc25b63d176479f8846a2026bb7f0175f",
@@ -6,13 +10,23 @@ var Map = {
 	longitude : 5.379264,
 	zoom : 13,
 	mymap : null,
-    marker: "",
-    markers: "",
-    //station_name: null,
-    //available_bikes : null,
+
+
 
 
 //methods
+
+//initialisation des méthodes de l'objet
+    init : function() {
+        Map.mapMethod();
+        Map.getMarkers();
+        Map.verifStation();
+        Map.clearStor();
+        Map.signUpM();
+        Map.closeB();
+        Map.validResa();
+
+    },
 
 	mapMethod : function(){
 		this.mymap = L.map('mapid').setView([this.latitude, this.longitude], this.zoom);
@@ -29,9 +43,8 @@ var Map = {
 	getMarkers : function(){
 		ajaxGet(this.urlapi, function (reponse) {
 			var stations = JSON.parse(reponse);
-    		console.log(stations);
     		var LeafIcon = L.Icon.extend({
-    		options: {
+    		  options: {
         		iconSize:     [50, 50], //taille de l'icône
         		shadowSize:   [50, 64], //ombre porté (à suppr pdt test)
         		iconAnchor:   [0, 50], //ancrage de l'icône
@@ -40,46 +53,40 @@ var Map = {
     			}
 			});
 			//création de variables pour stackage des 3 différentes icônes (verte, orange, rouge)
-    var greenIcon = new LeafIcon({iconUrl: './images/green_icon.png'}),
-    redIcon = new LeafIcon({iconUrl: './images/red_icon.png'}),
-    orangeIcon = new LeafIcon({iconUrl: './images/orange_icon.png'});
+            var greenIcon = new LeafIcon({iconUrl: './images/green_icon.png'}),
+            redIcon = new LeafIcon({iconUrl: './images/red_icon.png'}),
+            orangeIcon = new LeafIcon({iconUrl: './images/orange_icon.png'});
 
-    L.icon = function (options) {
-    return new L.Icon(options);
-	};
+        L.icon = function (options) {
+        return new L.Icon(options);
+    	};
 
-    Map.markers = new L.MarkerClusterGroup();
+        Map.markers = new L.MarkerClusterGroup();
 
-    stations.forEach(function (station) {
-        var tableau_name = station.name.split("-"); //
-        Map.station_name = tableau_name[1] ;
-        var station_status = "Fermée";
-         //Choix des markers selons statuts des stations et nombres de vélos présents dans la station
-
-
-
-            //condition pour couleur du marker. si nb vélo sup à 5 afichage du markeur en vert
-            if (station.available_bikes >= 5) {
-        Map.marker = L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
-        station_status = "Ouvert"} //idement mais affichage en orange
-            else if(station.status = "OPEN" && station.available_bikes <= 4 ) {
-        Map.marker =L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
-        station_status = "Ouvert"}else if (station.available_bikes === 0) { //si 0 marker eu rouge
-        Map.marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
-        }
-            else { //si aucune conditon remplie : rouge
-        Map.marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
-        };
+        stations.forEach(function (station) {
+            var tableau_name = station.name.split("-"); //
+            var station_name = tableau_name[1] ;
+            var station_status = "Fermée";
+            var marker ;
+             //Choix des markers selons statuts des stations et nombres de vélos présents dans la station
 
 
 
-        Map.markers.addLayer(Map.marker);
+                //condition pour couleur du marker. si nb vélo sup à 5 afichage du markeur en vert
+                if (station.available_bikes >= 5) {
+                    marker = L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
+                    station_status = "Ouvert"} //idement mais affichage en orange
+                else if(station.status = "OPEN" && station.available_bikes <= 4 ) {
+                    marker =L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
+                    station_status = "Ouvert"}else if (station.available_bikes === 0) { //si 0 marker eu rouge
+                    marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
+            }
+                else { //si aucune conditon remplie : rouge
+                    marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
+            };
 
-    }); //fin for each boucle pour ajout des points sur la carte
-	Map.mymap.addLayer(Map.markers);
 
-            displayPanel1 = function(){
-                //$("#mapid").width("70%"); //changement de la largeur de carte pour 70% de la taille de la page
+            marker.on('click',function(){
                 $("#infoStation").show(); //affichage div en display none par défault
                 $("#nomStation").html(station_name);
                 $("#adresseStation").html(station.address); //affichage du nom de la station
@@ -87,136 +94,114 @@ var Map = {
                 $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
                 $("#attacheDispo").html(station.available_bike_stands); //affichage du nombre d'attache dispo
 
-                };
+            });
 
-Map.marker.on('click',displayPanel1());
+            Map.markers.addLayer(marker);
+        }); //fin for each boucle pour ajout des points sur la carte
+Map.mymap.addLayer(Map.markers);
+
+
 
 		});// fin fonction ajax get
 
 	},//fin getMarkers
 
-		//displaysM : function(){
-			 //Fin displayPanel1
-/*
-        	displayPanel2 = function(){
-		        $("#mapid").hide(); //changement de la largeur de carte pour 70% de la taille de la page
-		        $("#infoStation").show(); //affichage div en display none par défault
-		        $("#nomStation").html(station_name);
-		        $("#etatStation").html(station_status); //affichage statut open ou close de la station
-		        $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
-		        };
-                //getMarkers(marker).on('click', displayPanel1)
+	valid : function(){
 
-		  resizePage = function(){
-        		var Largeur = $(window).width();
-            	if(Largeur < 1024) {
-            		getMarkers(marker).on('click', displayPanel2);
-            		}else{
-            		getMarkers(marker).on('click', displayPanel1); //gestion du click sur le marker pour affichage des informations (via fonction display)
-            		}
-			};
-
-		   $(window).resize(resizePage);
-			resizePage(); // Appel de la fonction à l'affichage de la page.
-*/
-		//},
-
-		valid : function(){
-            $(function() {
-    			sessionStorage.setItem("nomStation", $("#nomStation").html());
-                //déclaration variables reprenant informations nécessaires à la réservation
-                var nom = $("#Formnom").val();
-                var prenom = $("#Formprenom").val();
-                var missNom=$("#missNom");
-                var missPrenom = $("#missPrenom");
-                var saisieValid = false;
-
-                missNom.hide();
-                missPrenom.hide();
+        sessionStorage.setItem("nomStation", $("#nomStation").html());
+            //déclaration variables reprenant informations nécessaires à la réservation
+            var nom = $("#Formnom").val();
+            var prenom = $("#Formprenom").val();
+            var missNom=$("#missNom");
+            var missPrenom = $("#missPrenom");
+            var saisieValid = false;
+            missNom.hide();
+            missPrenom.hide();
                 //gestion condition avec prise en compte espace dans le formulaire ->espace considéré comme form vide
                 if($.trim(nom) === '' || $.trim(prenom) === '' ){
 
-                	if($.trim(nom) === ''){
-                		missNom.show();
-                    	missNom.text("Nom manquant");
-                    	missNom.css('color','red');
-                	}
-                	if ($.trim(prenom) === ''){
-                    	missPrenom.show();
-                    	missPrenom.text("Prénom manquant");
-                    	missPrenom.css('color','red');
+                    	if($.trim(nom) === ''){
+                    		missNom.show();
+                        	missNom.text("Nom manquant");
+                        	missNom.css('color','red');
+                    	}
+                    	if ($.trim(prenom) === ''){
+                        	missPrenom.show();
+                        	missPrenom.text("Prénom manquant");
+                        	missPrenom.css('color','red');
+                        }
+
+                }else{
+                        //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
+                        sessionStorage.setItem("Formprenom", $("#Formprenom").val());
+                        sessionStorage.setItem("Formnom", $("#Formnom").val());
+
+                       $('#selectionStation').html("Réservation à la station "
+                        + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
+                        +" "
+                        + sessionStorage.getItem("Formnom"));
+         				CountDownObj.timer(sessionStorage.getItem("distance"));
+                         saisieValid = true;
                 }
 
-            }else{
-                    //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
-                    sessionStorage.setItem("Formprenom", $("#Formprenom").val());
-                    sessionStorage.setItem("Formnom", $("#Formnom").val());
 
-                   $('#selectionStation').html("Réservation à la station "
-                    + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
-                    +" "
-                    + sessionStorage.getItem("Formnom"));
-     				CountDownObj.timer(sessionStorage.getItem("distance"));
-                     saisieValid = true;
-                	}
+                    return saisieValid;
 
-
-                return saisieValid;
-            });
 
 	}, //fin valid
 
-};
+    verifStation : function(){
+        if(sessionStorage.getItem("nomStation") == null) {
+            $("#selectionStation").html("Pas de réservation en cours");
+        } else {
 
-$(function() {
-   //On vérifie l'existence d'une variable de session
-    if(sessionStorage.getItem("nomStation") == null) {
-        $("#selectionStation").html("Pas de réservation en cours");
-    } else {
-            console.log("il y a une résa " + sessionStorage.getItem("nomStation"));
-            $("#selectionStation").html("<p>Réservation à la station</p> "
+                $("#selectionStation").html("<p>Réservation à la station</p> "
                 + sessionStorage.getItem("nomStation")
                 +" pour " + sessionStorage.getItem("Formprenom")
                 +" "
                 + sessionStorage.getItem("Formnom"));
-            console.log(sessionStorage.getItem("distance"));
+
             CountDownObj.timer(sessionStorage.getItem("distance"));
-    };
+        }
 
+    },
 
-            $("#clearCanvasSimple").on('click', function(){
-                console.log(sessionStorage.getItem("nomStation"));
-                sessionStorage.clear();
-                console.log(sessionStorage.getItem("nomStation"));
-            });
+    clearStor : function(){
+        var clearC =$("#clearCanvasSimple");
+        clearC.click(sessionStorage.clear());
+    },
 
+    signUpM : function(){
+        var sUp = $('#signUp');
+        sUp.click(function(){
+            $('.hover_bkgr_fricc').show();
+        });
+    },
 
-//gestion pop up pour la réservation. Ouverture au clic de la validation du canvas
-  $('#signUp').click(function(){
-       $('.hover_bkgr_fricc').show();
-    });
+    closeB : function (){
+        var closeButton = $('.popupCloseButton');
+        closeButton.click(function(){
+             $('.hover_bkgr_fricc').hide();
+        })
+    },
 
-  //lancement de la fonction "valid" reprise plus haut
-    $('#valid').click(function(){
-       if( MapObj.valid() ){
-            CountDownObj.timer();
-            $('.hover_bkgr_fricc').html('<p>Réservation prise en compte !</p>');
-            $('.hover_bkgr_fricc').fadeOut(3000, function() {
-            // Animation complete.
-            });
+    validResa : function(){
+        var validR = $('#valid');
+        validR.click(function(){
+            if(Map.valid() ){
+                 CountDownObj.timer();
+                 $('.hover_bkgr_fricc').html('<p>Réservation prise en compte !</p>');
+                 $('.hover_bkgr_fricc').fadeOut(3000, function() {
+                 // Animation complete.
+                 });
 
-       }
+            }
+        });
+    },
 
-    });
+};
 
-    $('.popupCloseButton').click(function(){
-        $('.hover_bkgr_fricc').hide();
-    });
-
-});
-//Map.displaysM;
-Map.mapMethod();
-Map.getMarkers();
-//Map.marker.on('click', Map.displayPanel1());
-//Map.valid();
+$(function() {
+    Map.init();
+})
 

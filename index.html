@@ -24,62 +24,62 @@
   </h1>
 </blockquote>
 
-<!--/NAVBAR-->
+
 
                     <!--Slider-->
-    <section id="slider">
-        <div class="container">
-            <h2>Vous cherchez un vélo ? Voila comment cela fonctionne ?</h2>
-            <div class="mySlides">
-                <div><img src="images/velo1.jpg" alt="capture écran etape 1">
-                </div>
-                <div>
-                    <h3><span>Etape 1</span></h3>
-                    <p>3 différentes icones indiquent la disponibilités et le nombre de vélos restants./p>
-                </div>
+<section id="slider">
+    <div class="container">
+        <h2>Vous cherchez un vélo ? Voila comment cela fonctionne ?</h2>
+        <div class="mySlides">
+            <div><img src="images/velo1.jpg" alt="capture écran etape 1">
             </div>
-            <div class="mySlides">
-                <div><img src="images/velo2.jpg" alt="capture écran etape 2">
-                </div>
-                <div>
-                    <h3><span>Etape 2</span></h3>
-                    <p>Pour connaitre l'état et le nombre de vélos, cliquez sur une icône sur la carte</p>
-                </div>
-            </div>
-            <div class="mySlides">
-                <div><img src="images/velo3.jpg" alt="capture écran etape 3">
-                </div>
-                <div>
-                    <h3><span>Etape 3</span></h3>
-                    <p>Dans le panneau "Informations sur la station" à droite de la carte, cliquer sur "Réserver" afin d'ouvrir le panneau de réservation</p>
-                </div>
-            </div>
-            <div class="mySlides">
-                <div><img src="images/velo4.jpg" alt="capture écran etape 4">
-                </div>
-                <div>
-                    <h3><span>Etape 4</span></h3>
-                    <p>Signer dans le panneau prévu à cet effet, cliquer sur "Effacer" pour recommencer si besoin, puis cliquer sur "Valider"</p>
-                </div>
-            </div>
-            <div class="mySlides">
-                <div><img src="images/velo1.jpg" alt="capture écran etape 5">
-                </div>
-                <div>
-                    <h3><span>Etape 5</span></h3>
-                    <p>Votre réservation est valable pendant 20min avant confirmation, cliquer sur "Annuler" pour annuler votre réservation. Si vous décidez de réserver dans une autre station, cela annule automatiquement votre réservation précédente</p>
-                </div>
+            <div>
+                <h3><span>Etape 1</span></h3>
+                <p>3 différentes icones indiquent la disponibilités et le nombre de vélos restants.</p>
             </div>
         </div>
-
-        <div id="btn_instructions">
-
-          <button id="button_left" class="prev"><img src ="images/left-arrow.png"></button>
-          <button class="stop"><img src="images/pausebtn.png"></button">
-          <button class="play"> <img src="images/playbtn.png"></button>
-           <button id="button_right" class="next"><img src ="images/next.png"></button>
+        <div class="mySlides">
+            <div><img src="images/velo2.jpg" alt="capture écran etape 2">
+            </div>
+            <div>
+                <h3><span>Etape 2</span></h3>
+                <p>Pour connaitre l'état et le nombre de vélos, cliquez sur une icône sur la carte</p>
+            </div>
         </div>
-    </section>
+        <div class="mySlides">
+            <div><img src="images/velo3.jpg" alt="capture écran etape 3">
+            </div>
+            <div>
+                <h3><span>Etape 3</span></h3>
+                <p>Dans le panneau "Informations sur la station" à droite de la carte, cliquer sur "Réserver" afin d'ouvrir le panneau de réservation</p>
+            </div>
+        </div>
+        <div class="mySlides">
+            <div><img src="images/velo4.jpg" alt="capture écran etape 4">
+            </div>
+            <div>
+                <h3><span>Etape 4</span></h3>
+                <p>Signer dans le panneau prévu à cet effet, cliquer sur "Effacer" pour recommencer si besoin, puis cliquer sur "Valider"</p>
+            </div>
+        </div>
+        <div class="mySlides">
+            <div><img src="images/velo1.jpg" alt="capture écran etape 5">
+            </div>
+            <div>
+                <h3><span>Etape 5</span></h3>
+                <p>Votre réservation est valable pendant 20min avant confirmation, cliquer sur "Annuler" pour annuler votre réservation. Si vous décidez de réserver dans une autre station, cela annule automatiquement votre réservation précédente</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="btn_instructions">
+
+      <button id="button_left" class="prev"><img src ="images/left-arrow.png"></button>
+      <button class="stop"><img src="images/pausebtn.png"></button">
+      <button class="play"><img src="images/playbtn.png"></button>
+       <button id="button_right" class="next"><img src ="images/next.png"></button>
+    </div>
+</section>
 
     <!--slider-->
 
@@ -88,75 +88,85 @@
 <div id = "selectionStation"></div><div id="timer"></div>
 </section>
                     <!--/Slider-->
-<div id = "mapInfo">
-<div id = "mapid"></div> <!--affichage map-->
+
+<section id ="booked_map">
+  <div id = "mapInfo">
+    <div id = "mapid"></div> <!--affichage map-->
       <div id="infoStation"> <!-- Cadre informations sur la station sélectionnée -->
 
-          <h2>Informations sur la station</h2>
+        <h2>Informations sur la station</h2>
 
-                    <!-- Informations sur la station sélectionnée -->
-              <ul id="listeInfo">
-                 <li>Nom : <span id="nomStation"> <!-- Nom inséré en Javascript --> </span></li>
-                  <li>Adresse : <span id="adresseStation"> <!-- Adresse insérer en Javascript --> </span></li>
-                  <li>Etat : <span id="etatStation"> <!-- État inséré en Javascript --> </span></li>
-                  <li>Vélos disponibles : <span id="veloDispo"> <!-- Nombre inséré en Javascript --> </span></li>
-                  <li>Points d'attache disponibles : <span id="attacheDispo"> <!-- Nombre inséré en Javascript --> </span></li>
-              </ul>
-        <!--<div id="canvasDiv"></div>-->
-            <div id="canvas">
-               <canvas class="roundCorners" id="newSignature"
-                ></canvas>
-            </div>
-<p class="demoToolList"><button type="button" id="clearCanvasSimple" class="btn btn-outline-primary">Annuler</button></p>
+                        <!-- Informations sur la station sélectionnée -->
+        <ul id="listeInfo">
+          <li>Nom : <span id="nomStation"></span></li>
+          <li>Adresse : <span id="adresseStation"></span></li>
+          <li>Etat : <span id="etatStation"></span></li>
+          <li>Vélos disponibles : <span id="veloDispo"></span></li>
+          <li>Points d'attache disponibles : <span id="attacheDispo"></span></li>
+        </ul>
+      <div id="canvas">
+        <canvas class="roundCorners" id="newSignature"></canvas>
+      </div>
+      <p class="demoToolList"><button type="button" id="clearCanvasSimple" class="btn btn-outline-primary">Annuler</button></p>
+      <button type="button" id = "signUp" class="btn btn-primary">Inscription</button>
+      </div>
 
-
-<button type="button" id = "signUp" class="btn btn-primary">Inscription</button>
-        </div>
-
- </div>                   <!-- /Informations sur la station sélectionnée -->
-
+  </div>                   <!-- /Informations sur la station sélectionnée -->
+</section>
 
 <!--POP UP-->
 <a class="trigger_popup_fricc"></a>
 
 <div class="hover_bkgr_fricc">
-    <span class="helper"></span>
-    <div id = "formulaire">
-        <div class="popupCloseButton">X</div>
-        	<h3>Inscription</h3>
-        	<form method="get">
-   			<p>Nom <input type="text" name="Nom" id ="Formnom"/></p>
-        <span id="missNom"></span><br>
-   			<p>Prénom <input type="text" name="Prenom" id ="Formprenom"/></p>
-        <span id="missPrenom"></span><br>
-   			<button type="button" id ="valid" class="btn btn-primary">Réserver</button>
-			</form>
-    </div>
+  <span class="helper"></span>
+  <div id = "formulaire">
+  <div class="popupCloseButton">X</div>
+  <h3>Inscription</h3>
+    <form method="get">
+   	  <p>Nom <input type="text" name="Nom" id ="Formnom"/></p>
+      <span id="missNom"></span><br>
+   		<p>Prénom <input type="text" name="Prenom" id ="Formprenom"/></p>
+      <span id="missPrenom"></span><br>
+   		<button type="button" id ="valid" class="btn btn-primary">Réserver</button>
+		</form>
+  </div>
 </div>
 <!--/POPUP-->
 
-<section class ="fctIcons">
-  <img class="icon" src="./images/green_icon.png">
-  <img class="icon" src="./images/orange_icon.png">
-  <img class="icon" src="./images/red_icon.png">
+<section id = "instru_icons">
+  <div class="in_incons">
+    <div><img class = "icon" src="./images/green_icon.png" alt="capture écran etape 1"></div>
+      <div>
+        <p>Station ouverte, vélos disponibles</p>
+      </div>
+  </div>
+
+  <div class="in_incons">
+    <div><img class="icon" src="./images/orange_icon.png" alt="capture écran etape 1"></div>
+      <div>
+        <p>Station ouverte, peu de vélos disponibles, hurry !</p>
+      </div>
+  </div>
+
+  <div class="in_incons">
+    <div><img class="icon" src="./images/red_icon.png" alt="capture écran etape 1"></div>
+      <div>
+        <p>Station fermée.</p>
+      </div>
+  </div>
+
+
 </section>
 
-<section class = "comment_icons">
-  <p class = "cmt">vélos disponibles</p>
-  <p class ="cmt">Reste moins de x vélos</p>
-  <p class ="cmt">velos indisponibles ou station fermée</p>
-</section>
 
 <footer>
-
-
-  <div id ="nous_suivre">
-    <h3>Nous suivre</h3>
-    <img src="https://img.icons8.com/color/50/000000/twitter.png">
-    <img src="https://img.icons8.com/color/48/000000/facebook.png">
-    <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
-  </div>
-<p> Ville de Marseille - Tous droits réservés </p>
+<h3 div ="nS_title">Nous suivre</h3>
+    <div id ="nous_suivre">
+      <img src="https://img.icons8.com/color/50/000000/twitter.png">
+      <img src="https://img.icons8.com/color/48/000000/facebook.png">
+      <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
+    </div>
+  <p> Ville de Marseille - Tous droits réservés </p>
 </footer>
 
     <!--Script JS-->
@@ -166,7 +176,7 @@
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script type="text/javascript" src="./javascript/slider_obj.js"></script>
 	<script type="text/javascript" src="./javascript/ajax/ajax.js"></script>
-	<script type="text/javascript" src="./javascript/mainApp.js"></script>
+	<script type="text/javascript" src="./javascript/Map.js"></script>
 	<script type="text/javascript" src="./javascript/canvasF.js"></script>
   <script type="text/javascript" src="./javascript/countdownObj.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
