@@ -1,11 +1,15 @@
 var Map = {
-//properties	
+//properties
 	token : "43ca35bbc25b63d176479f8846a2026bb7f0175f",
 	urlapi : "https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey=43ca35bbc25b63d176479f8846a2026bb7f0175f",
 	latitude : 43.275070,
 	longitude : 5.379264,
 	zoom : 13,
 	mymap : null,
+    marker: "",
+    markers: "",
+    //station_name: null,
+    //available_bikes : null,
 
 
 //methods
@@ -44,121 +48,175 @@ var Map = {
     return new L.Icon(options);
 	};
 
-    var markers = new L.MarkerClusterGroup();
+    Map.markers = new L.MarkerClusterGroup();
 
     stations.forEach(function (station) {
-    	var tableau_name = station.name.split("-"); //
-          	var station_name = tableau_name[1] ;
-          	var station_status = "Fermée";
+        var tableau_name = station.name.split("-"); //
+        Map.station_name = tableau_name[1] ;
+        var station_status = "Fermée";
          //Choix des markers selons statuts des stations et nombres de vélos présents dans la station
 
 
 
             //condition pour couleur du marker. si nb vélo sup à 5 afichage du markeur en vert
-        if (station.available_bikes >= 5) {
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
+            if (station.available_bikes >= 5) {
+        Map.marker = L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
         station_status = "Ouvert"} //idement mais affichage en orange
-        else if(station.status = "OPEN" && station.available_bikes <= 4 ) {
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
+            else if(station.status = "OPEN" && station.available_bikes <= 4 ) {
+        Map.marker =L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
         station_status = "Ouvert"}else if (station.available_bikes === 0) { //si 0 marker eu rouge
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
+        Map.marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
         }
-        else { //si aucune conditon remplie : rouge
-        var marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
+            else { //si aucune conditon remplie : rouge
+        Map.marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
         };
 
 
 
-        markers.addLayer(marker);
+        Map.markers.addLayer(Map.marker);
 
     }); //fin for each boucle pour ajout des points sur la carte
-	Map.mymap.addLayer(markers);
-		});//méthode ajax get
+	Map.mymap.addLayer(Map.markers);
 
-	},//fin méthode récup
+            displayPanel1 = function(){
+                //$("#mapid").width("70%"); //changement de la largeur de carte pour 70% de la taille de la page
+                $("#infoStation").show(); //affichage div en display none par défault
+                $("#nomStation").html(station_name);
+                $("#adresseStation").html(station.address); //affichage du nom de la station
+                $("#etatStation").html(station_status); //affichage statut open ou close de la station
+                $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
+                $("#attacheDispo").html(station.available_bike_stands); //affichage du nombre d'attache dispo
 
-		displaysM : function(){
-			displayPanel1 = function(){
-        		$("#mapid").width("70%"); //changement de la largeur de carte pour 70% de la taille de la page
-		        $("#infoStation").show(); //affichage div en display none par défault
-		        $("#nomStation").html(station_name);
-		        $("#adresseStation").html(station.address); //affichage du nom de la station
-		        $("#etatStation").html(station_status); //affichage statut open ou close de la station
-		        $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
-		        $("#attacheDispo").html(station.available_bike_stands); //affichage du nombre d'attache dispo
+                };
 
-        		};
+Map.marker.on('click',displayPanel1());
 
+		});// fin fonction ajax get
+
+	},//fin getMarkers
+
+		//displaysM : function(){
+			 //Fin displayPanel1
+/*
         	displayPanel2 = function(){
 		        $("#mapid").hide(); //changement de la largeur de carte pour 70% de la taille de la page
 		        $("#infoStation").show(); //affichage div en display none par défault
 		        $("#nomStation").html(station_name);
 		        $("#etatStation").html(station_status); //affichage statut open ou close de la station
 		        $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
-		        };	
+		        };
+                //getMarkers(marker).on('click', displayPanel1)
 
 		  resizePage = function(){
         		var Largeur = $(window).width();
             	if(Largeur < 1024) {
-            		marker.on('click', displayPanel2);
+            		getMarkers(marker).on('click', displayPanel2);
             		}else{
-            		marker.on('click', displayPanel1); //gestion du click sur le marker pour affichage des informations (via fonction display)
+            		getMarkers(marker).on('click', displayPanel1); //gestion du click sur le marker pour affichage des informations (via fonction display)
             		}
 			};
 
 		   $(window).resize(resizePage);
 			resizePage(); // Appel de la fonction à l'affichage de la page.
-     
-		},
+*/
+		//},
 
 		valid : function(){
-$(function() {
-			sessionStorage.setItem("nomStation", $("#nomStation").html());
-            //déclaration variables reprenant informations nécessaires à la réservation
-            var nom = $("#Formnom").val();
-            var prenom = $("#Formprenom").val();
-            var missNom=$("#missNom");
-            var missPrenom = $("#missPrenom");
-            var saisieValid = false;
+            $(function() {
+    			sessionStorage.setItem("nomStation", $("#nomStation").html());
+                //déclaration variables reprenant informations nécessaires à la réservation
+                var nom = $("#Formnom").val();
+                var prenom = $("#Formprenom").val();
+                var missNom=$("#missNom");
+                var missPrenom = $("#missPrenom");
+                var saisieValid = false;
 
-            missNom.hide();
-            missPrenom.hide();
-            //gestion condition avec prise en compte espace dans le formulaire ->espace considéré comme form vide
-            if($.trim(nom) === '' || $.trim(prenom) === '' ){
+                missNom.hide();
+                missPrenom.hide();
+                //gestion condition avec prise en compte espace dans le formulaire ->espace considéré comme form vide
+                if($.trim(nom) === '' || $.trim(prenom) === '' ){
 
-            	if($.trim(nom) === ''){
-            		missNom.show();
-                	missNom.text("Nom manquant");
-                	missNom.css('color','red');
-            	}
-            	if ($.trim(prenom) === ''){
-                	missPrenom.show();
-                	missPrenom.text("Prénom manquant");
-                	missPrenom.css('color','red');
-            }
+                	if($.trim(nom) === ''){
+                		missNom.show();
+                    	missNom.text("Nom manquant");
+                    	missNom.css('color','red');
+                	}
+                	if ($.trim(prenom) === ''){
+                    	missPrenom.show();
+                    	missPrenom.text("Prénom manquant");
+                    	missPrenom.css('color','red');
+                }
 
-        }else{
-                //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
-                sessionStorage.setItem("Formprenom", $("#Formprenom").val());
-                sessionStorage.setItem("Formnom", $("#Formnom").val());
+            }else{
+                    //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
+                    sessionStorage.setItem("Formprenom", $("#Formprenom").val());
+                    sessionStorage.setItem("Formnom", $("#Formnom").val());
 
-               $('#selectionStation').html("Réservation à la station "
-                + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
-                +" "
-                + sessionStorage.getItem("Formnom"));
- 				CountDownObj.timer(sessionStorage.getItem("distance"));
-                 saisieValid = true;
-            	}
+                   $('#selectionStation').html("Réservation à la station "
+                    + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
+                    +" "
+                    + sessionStorage.getItem("Formnom"));
+     				CountDownObj.timer(sessionStorage.getItem("distance"));
+                     saisieValid = true;
+                	}
 
 
-            return saisieValid;
-        });
+                return saisieValid;
+            });
 
-	}, //fin2	
+	}, //fin valid
 
 };
-//Map.displaysM();
+
+$(function() {
+   //On vérifie l'existence d'une variable de session
+    if(sessionStorage.getItem("nomStation") == null) {
+        $("#selectionStation").html("Pas de réservation en cours");
+    } else {
+            console.log("il y a une résa " + sessionStorage.getItem("nomStation"));
+            $("#selectionStation").html("<p>Réservation à la station</p> "
+                + sessionStorage.getItem("nomStation")
+                +" pour " + sessionStorage.getItem("Formprenom")
+                +" "
+                + sessionStorage.getItem("Formnom"));
+            console.log(sessionStorage.getItem("distance"));
+            CountDownObj.timer(sessionStorage.getItem("distance"));
+    };
+
+
+            $("#clearCanvasSimple").on('click', function(){
+                console.log(sessionStorage.getItem("nomStation"));
+                sessionStorage.clear();
+                console.log(sessionStorage.getItem("nomStation"));
+            });
+
+
+//gestion pop up pour la réservation. Ouverture au clic de la validation du canvas
+  $('#signUp').click(function(){
+       $('.hover_bkgr_fricc').show();
+    });
+
+  //lancement de la fonction "valid" reprise plus haut
+    $('#valid').click(function(){
+       if( MapObj.valid() ){
+            CountDownObj.timer();
+            $('.hover_bkgr_fricc').html('<p>Réservation prise en compte !</p>');
+            $('.hover_bkgr_fricc').fadeOut(3000, function() {
+            // Animation complete.
+            });
+
+       }
+
+    });
+
+    $('.popupCloseButton').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+
+});
+//Map.displaysM;
 Map.mapMethod();
 Map.getMarkers();
-Map.valid();
+//Map.marker.on('click', Map.displayPanel1());
+//Map.valid();
 
