@@ -1,7 +1,7 @@
 var Slider = {
     // Define current slide
     currentIndex: 0,
-
+//initialisation des autres méthodes de l'objet
     init: function () {
         Slider.autoSlide();
         Slider.playAutoClick();
@@ -10,7 +10,7 @@ var Slider = {
         Slider.changeSlideOnKeypress();
     },
 
-    // Display the current slide
+    // affiche l'image en cours
     activeSlide: function () {
         var slides = $('.mySlides');
         var slide = slides.eq(Slider.currentIndex);
@@ -18,7 +18,7 @@ var Slider = {
         slide.css('display', 'flex');
     },
 
-    // Define the next slide as the current slide
+    // image suivante
     indexPlus: function () {
         var slides = $('.mySlides');
         var slidesNumber = slides.length;
@@ -28,7 +28,7 @@ var Slider = {
         }
     },
 
-    // Define the previous slide as the the current slide
+    // image précédente
     indexMinus: function () {
         var slides = $('.mySlides');
         var slidesNumber = slides.length;
@@ -38,29 +38,29 @@ var Slider = {
         }
     },
 
-    // automatic and controllable slide function
+    // automatisation du passage des images sur slider
     autoSlide: function () {
         var play = $('.play');
         play.click(function () {
             var timer = setInterval(function () {
                 Slider.indexPlus();
                 Slider.activeSlide();
-            }, 5000);
-            var stop = $('.stop');
+            }, 5000);//affichage puis passage slider suivant à intervalle de 5 secs
+            var stop = $('.stop');//stockage bouton stop
             stop.click(function () {
-                clearInterval(timer);
+                clearInterval(timer);//arrêt de l'interval, donc du slider
             });
         });
 
     },
 
-    // automatic slider on load
+    // lecture auto slider
     playAutoClick: function () {
-        var play = $('.play');
-        play.trigger('click');
+        var play = $('.play'); //stockage pouton en variable
+        play.trigger('click');//on déclanche au clic le slider
     },
 
-    // next slide on click on the ">" button
+    // controle au clic pour boutou suivant
     nextSlideOnClick: function () {
         var next = $('#button_right');
         next.click(function () {
@@ -69,7 +69,7 @@ var Slider = {
         });
     },
 
-    // previous slide on click on the "<" button
+    // controle au clic pour pouton précédent
     prevSlideOnClick: function () {
         var prev = $('#button_left');
         prev.click(function () {
@@ -78,7 +78,7 @@ var Slider = {
         });
     },
 
-    // previous / next slide with keyboard
+    // controle aux touches du clavier
     changeSlideOnKeypress: function () {
         $('body').keydown(function (e) {
             if (e.which === 39) {
@@ -94,5 +94,5 @@ var Slider = {
 
 
 $(function () {
-    Slider.init();
+    Slider.init(); //appel à l'initialisation du slider
 });
