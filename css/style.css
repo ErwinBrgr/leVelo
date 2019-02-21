@@ -9,13 +9,103 @@ h1
     text-align:center;
     vertical-align: middle;
     white-space: nowrap;
-    height: 1.6em;
+    height: 1.4em;
     color : white;
 }
+
+
+/* Slides style */
+
+.mySlides:first-of-type {
+    display: flex;
+}
+
+.mySlides {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.mySlides div {
+    padding: 20px;
+}
+
+.mySlides img {
+    max-height: 300px;
+}
+
+@media screen and (max-width: 700px) {
+    .mySlides {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .mySlides img {
+        max-width: 150px;
+    }
+}
+
+
+
+/* Tutorial slider controls */
+
+#tutorial button {
+    background-color: #EB6841;
+    border: solid 2px #d44d02;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
+
+#tutorial button:hover {
+    background-color: #d44d02;
+    cursor: pointer;
+}
+
+#btn_instructions
+{
+    position: relative ;
+    margin-left : 44%;
+}
+
+@media screen and (max-width: 700px) {
+    .stop {
+        left: 10%;
+    }
+    .play {
+        right: 10%;
+    }
+}
+
+
+
+#booked
+{
+    display : flex;
+    flex-direction : row;
+    margin-left : 40%;
+}
+
+
+
+
+#mapInfo
+{
+    display: flex;
+    flex-direction: row;
+    text-align : center;
+}
+
 #mapid
 {
-	height : 640px;
-	width: 90%;
+    height : 640px;
+    width: 90%;
     margin-left : 5%;
     border: solid black 1px;
     border-radius:20px;
@@ -28,27 +118,28 @@ h1
     margin-left:1%;
     background-color: #f8f9fa;
     border : 1px solid black;
-    border-radius: 0x;
+    border-radius: 20px;
     padding-top:2%;
 }
 
-#navbarSupportedContent
-{
-    width : 100%;
-}
-#booked
-{
-    font-weight: bold;
-    display: flex;
+@media screen and (max-width: 1023px) {
+    #mapInfo {
+        flex-direction: column;
+    }
+    #mapid {
+        height: 300px;
+        margin: 20px;
+        border: solid 1px #556270;
+    }
 
-    padding : 1%;
-    margin-left: 2%;
+    #infoStation
+    {
+        width : 90%;
+        margin: 20px;
+        border : solid 1px #556270;
+    }
+}
 
-}
-#decompteBloc
-{
-    padding-left:80%;
-}
 
 #infoStation > h2
 {
@@ -57,16 +148,9 @@ h1
 
 #infoStation li
 {
-	list-style: none;
-	padding: 15px;
-	font-style: bold;
-}
-
-#mapInfo
-{
-	display : flex;
-    text-align : center;
-
+    list-style: none;
+    padding: 15px;
+    font-style: bold;
 }
 
 .roundCorners
@@ -79,7 +163,7 @@ h1
 
 #signUp
 {
-	display : none;
+    display : none;
     margin-left:41%;
 }
 
@@ -213,49 +297,62 @@ h1
     font-weight: bold;
 }
 /* Popup box END */
+
+footer
+
+{
+    margin-top : 3%;
+}
+
+footer > h3
+{
+    text-align : center;
+}
+
+
 #nous_suivre
 {
     margin-left: auto;
     margin-right: auto;
     width : 10%;
+    display : flex;
 }
+
+
+
 
 footer > p
 {
     text-align : center;
 }
 
-.fctIcons
+#instru_icons
 {
-    padding-left :2%;
-    display: flex;
+    display : flex;
+    padding-left : 15%;
+    width : 90%;
+    margin-left : 5%;
+    text-align: center;
+    border : 1px solid black;
+    border-radius: 10px;
+    color: rgb(69,123,216),
 }
+
+.in_incons
+
+{
+    margin : 2%;
+
+}
+
 .icon
 {
     width:35px;
-    height:35px;
-    margin-left : 23%;
+    /*height:35px;
+    margin-left : 23%;*/
 }
 
-
-.cmt
-{
-    width:35px;
-    height:35px;
-    margin-left : 23%;
-    display : flex;
-}
-
-
-.comment_icons
-{
-    padding-left :2%;
-    display: flex;
-    margin-bottom: 5%;
-    height: 45px;
-
-}
-
+*/
 #formulaire
 {
    width : 90%;
@@ -273,13 +370,6 @@ footer > p
     max-width: 900px;
 
 }
-
-
-/*.play
-{
-    width : 10px;
-    height : 10px;
-}*/
 
 
 /* Tutorial titles */
@@ -301,106 +391,4 @@ footer > p
     padding: 10px;
     border-radius: 15px;
     background-color: #EB6841;
-}
-
-
-/* Slides style */
-
-.mySlides:first-of-type {
-    display: flex;
-}
-
-.mySlides {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-}
-
-.mySlides div {
-    padding: 20px;
-}
-
-.mySlides img {
-    max-height: 300px;
-}
-
-@media screen and (max-width: 700px) {
-    .mySlides {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    .mySlides img {
-        max-width: 150px;
-    }
-}
-
-/* Fading animation */
-
-.mySlides,
-.info-station,
-.station-name,
-.station-address,
-.available-bikes,
-.reservation-button,
-.reservation {
-    -webkit-animation-name: mySlides;
-    -webkit-animation-duration: 2.5s;
-    animation-name: mySlides;
-    animation-duration: 2.5s;
-}
-
-@-webkit-keyframes mySlides {
-    from {
-        opacity: .4
-    }
-    to {
-        opacity: 1
-    }
-}
-
-@keyframes mySlides {
-    from {
-        opacity: .4
-    }
-    to {
-        opacity: 1
-    }
-}
-
-
-/* Tutorial slider controls */
-
-#tutorial button {
-    background-color: #EB6841;
-    border: solid 2px #d44d02;
-    height: 30px;
-    width: 30px;
-    border-radius: 15px;
-    color: white;
-    padding: 5px;
-    text-align: center;
-}
-
-#tutorial button:hover {
-    background-color: #d44d02;
-    cursor: pointer;
-}
-
-#btn_instructions
-{
-    position: absolute ;
-    left : 44%;
-}
-
-@media screen and (max-width: 700px) {
-    .stop {
-        left: 10%;
-    }
-    .play {
-        right: 10%;
-    }
 }
