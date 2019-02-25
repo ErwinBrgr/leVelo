@@ -135,7 +135,6 @@ Map.mymap.addLayer(Map.markers);
                         //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
                         sessionStorage.setItem("Formprenom", $("#Formprenom").val());
                         sessionStorage.setItem("Formnom", $("#Formnom").val());
-
                        $('#selectionStation').html("Réservation à la station "
                         + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
                         +" "
