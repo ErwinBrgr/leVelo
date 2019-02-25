@@ -17,6 +17,8 @@ var Savnac = {
     clearCanvas : document.getElementById("clearCanvasSimple"),
     buttonValider : document.getElementById("signUp"),
     // Configure le canevas et ajoute nos gestionnaires d'événements après le chargement de la page
+
+
     init : function() {
         // Récupère l'élément canvas spécifique du document HTML
         this.canvas = document.getElementById("newSignature");
@@ -135,10 +137,10 @@ var Savnac = {
                 Savnac.touchY=touch.pageY-touch.target.offsetTop;
             }
         }
-    }
+    },
 };
 // Efface le contexte du canevas en utilisant la largeur et la hauteur du canevas
-Savnac.clearCanvas.addEventListener("click", function() {
+    Savnac.clearCanvas.addEventListener("click", function() {
     Savnac.ctx.clearRect(0, 0, Savnac.canvas.width, Savnac.canvas.height);
     Savnac.buttonValider.style.display = 'none';
 })
