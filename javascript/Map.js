@@ -16,18 +16,18 @@ var Map = {
 
 //methods
 
-//initialisation des méthodes de l'objet
+    //initialisation des méthodes de l'objet
     init : function() {
-        Map.mapMethod();
-        Map.getMarkers();
-        Map.verifStation();
-        Map.clearStor();
-        Map.signUpM();
-        Map.closeB();
-        Map.validResa();
+            Map.mapMethod();
+            Map.getMarkers();
+            Map.verifStation();
+            Map.clearStor();
+            Map.signUpM();
+            Map.closeB();
+            Map.validResa();
 
     },
-
+    //méthode de récupération de la carte
 	mapMethod : function(){
 		this.mymap = L.map('mapid').setView([this.latitude, this.longitude], this.zoom);
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -39,17 +39,14 @@ var Map = {
 
 	},
 
-
+    //méthode de récupération des icônes et afficage sur la carte leaflet
 	getMarkers : function(){
 		ajaxGet(this.urlapi, function (reponse) {
 			var stations = JSON.parse(reponse);
     		var LeafIcon = L.Icon.extend({
     		  options: {
         		iconSize:     [50, 50], //taille de l'icône
-        		shadowSize:   [50, 64], //ombre porté (à suppr pdt test)
         		iconAnchor:   [0, 50], //ancrage de l'icône
-        		shadowAnchor: [4, 62],//ancrage de l'ombre (à suppr pdt test)
-        		popupAnchor:  [10, 10] //gestion pop plus d'actualité, à supprim après test
     			}
 			});
 			//création de variables pour stackage des 3 différentes icônes (verte, orange, rouge)
@@ -68,37 +65,51 @@ var Map = {
             var station_name = tableau_name[1] ;
             var station_status = "Fermée";
             var marker ;
-             //Choix des markers selons statuts des stations et nombres de vélos présents dans la station
-
-
-
-                //condition pour couleur du marker. si nb vélo sup à 5 afichage du markeur en vert
-                if (station.available_bikes >= 5) {
-                    marker = L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
-                    station_status = "Ouvert"} //idement mais affichage en orange
-                else if(station.status = "OPEN" && station.available_bikes <= 4 ) {
-                    marker =L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
-                    station_status = "Ouvert"}else if (station.available_bikes === 0) { //si 0 marker eu rouge
-                    marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
+             
+            //Choix des markers selons statuts des stations et nombres de vélos présents dans la station
+            //Si nb vélo supérieur ou égal à 1 alors on affiche un marker vert et on affiche ouvert en Station Staus
+            if ( station.available_bikes >= 1 ) {
+                marker = L.marker([station.position.lat, station.position.lng], {icon: greenIcon});
+                station_status = "Ouvert"}
+            //Si 0 vélo alors on affiche un marker orange    
+            else if (station.available_bikes === 0 ) {
+                 marker = L.marker([station.position.lat, station.position.lng], {icon: orangeIcon});
+                 station_status = "Ouvert"
             }
-                else { //si aucune conditon remplie : rouge
-                    marker =L.marker([station.position.lat, station.position.lng], {icon: redIcon});
-            };
+            //si le statut de la station est "CLOSE" alors on affiche un marker rouge
+            else if (station.status = "CLOSE") {
+                marker = L.marker([station.position.lat, station.position.lng], {icon: redIcon});
+                station_status = "Fermée";
+            }
+            
 
 
             marker.on('click',function(){
-                $("#infoStation").show(); //affichage div en display none par défault
-                $("#nomStation").html(station_name);
-                $("#adresseStation").html(station.address); //affichage du nom de la station
-                $("#etatStation").html(station_status); //affichage statut open ou close de la station
-                $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
-                $("#attacheDispo").html(station.available_bike_stands); //affichage du nombre d'attache dispo
+                if (station.available_bikes === 0){
+                    $("#infoStation").show();
+                    $("#nomStation").html(station_name);
+                    $("#adresseStation").html(station.address);
+                    $("#etatStation").html("<p>réservation impossible</p>");
+                    $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
+                    $("#attacheDispo").html(station.available_bike_stands);
+                    $("#canvas").hide();
+                    $("#clearCanvasSimple").hide();
 
+                    } else {
+                    $("#infoStation").show(); //affichage div en display none par défault
+                    $("#nomStation").html(station_name);
+                    $("#adresseStation").html(station.address); //affichage du nom de la station
+                    $("#etatStation").html(station_status); //affichage statut open ou close de la station
+                    $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
+                    $("#attacheDispo").html(station.available_bike_stands);
+                    $("#canvas").show();
+                     //affichage du nombre d'attache dispo
+                }
             });
 
             Map.markers.addLayer(marker);
         }); //fin for each boucle pour ajout des points sur la carte
-Map.mymap.addLayer(Map.markers);
+Map.mymap.addLayer(Map.markers);//marker clusters
 
 
 
@@ -106,6 +117,7 @@ Map.mymap.addLayer(Map.markers);
 
 	},//fin getMarkers
 
+    //méthode de validation de la réservation : validation du nom et prénom + sauvegarde des informations en sessions storage. Lorsque conditions remplies, lancement du décompte
 	valid : function(){
 
         sessionStorage.setItem("nomStation", $("#nomStation").html());
@@ -133,12 +145,12 @@ Map.mymap.addLayer(Map.markers);
 
                 }else{
                         //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
-                        sessionStorage.setItem("Formprenom", $("#Formprenom").val());
-                        sessionStorage.setItem("Formnom", $("#Formnom").val());
+                        localStorage.setItem("Formprenom", $("#Formprenom").val());
+                        localStorage.setItem("Formnom", $("#Formnom").val());
                        $('#selectionStation').html("Réservation à la station "
-                        + sessionStorage.getItem("nomStation") + " pour " + sessionStorage.getItem("Formprenom")
+                        + sessionStorage.getItem("nomStation") + " pour " + localStorage.getItem("Formprenom")
                         +" "
-                        + sessionStorage.getItem("Formnom"));
+                        + localStorage.getItem("Formnom"));
          				CountDownObj.timer(sessionStorage.getItem("distance"));
                          saisieValid = true;
                 }
@@ -148,42 +160,45 @@ Map.mymap.addLayer(Map.markers);
 
 
 	}, //fin valid
-
+    //méthode de vérification de réservation pour si reservation en cours ou temps restant, nom station, et utlisateur ayant fait la réservation
     verifStation : function(){
-        if(sessionStorage.getItem("nomStation") == null) {
+        if(localStorage.getItem("nomStation") == null) {
             $("#selectionStation").html("Pas de réservation en cours");
         } else {
 
                 $("#selectionStation").html("<p>Réservation à la station</p> "
-                + sessionStorage.getItem("nomStation")
-                +" pour " + sessionStorage.getItem("Formprenom")
+                + localStorage.getItem("nomStation")
+                +" pour " + localStorage.getItem("Formprenom")
                 +" "
-                + sessionStorage.getItem("Formnom"));
+                + localStorage.getItem("Formnom"));
 
             CountDownObj.timer(sessionStorage.getItem("distance"));
         }
 
     },
 
+    //***Méthode de contrôle des fonctionnalités de la carte
+
+    //méthode permettant de remettre à zero les sessions storage
     clearStor : function(){
         var clearC =$("#clearCanvasSimple");
-        clearC.click(sessionStorage.clear());
+        clearC.click(sessionStorage.clear(),localStorage.clear());
     },
-
+    //methode permettant la validation de la signature
     signUpM : function(){
         var sUp = $('#signUp');
         sUp.click(function(){
             $('.hover_bkgr_fricc').show();
         });
     },
-
+    //méthode permettant de fermeture du pop up de réservation
     closeB : function (){
         var closeButton = $('.popupCloseButton');
         closeButton.click(function(){
              $('.hover_bkgr_fricc').hide();
-        })
+        });
     },
-
+    //methode validation de la réservation
     validResa : function(){
         var validR = $('#valid');
         validR.click(function(){
@@ -191,8 +206,7 @@ Map.mymap.addLayer(Map.markers);
                  CountDownObj.timer();
                  $('.hover_bkgr_fricc').html('<p>Réservation prise en compte !</p>');
                  $('.hover_bkgr_fricc').fadeOut(3000, function() {
-                 // Animation complete.
-                 });
+                                  });
 
             }
         });
@@ -201,6 +215,6 @@ Map.mymap.addLayer(Map.markers);
 };
 
 $(function() {
-    Map.init();
-})
+    Map.init();//initialisation des méthodes de l'objet
+});
 
