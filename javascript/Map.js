@@ -21,7 +21,6 @@ var Map = {
             Map.mapMethod();
             Map.getMarkers();
             Map.verifStation();
-            Map.clearStor();
             Map.signUpM();
             Map.closeB();
             Map.validResa();
@@ -147,10 +146,12 @@ Map.mymap.addLayer(Map.markers);//marker clusters
                         //si les deux conditions non validées alors le formulaire est ok et la réservation peut se lancer
                         localStorage.setItem("Formprenom", $("#Formprenom").val());
                         localStorage.setItem("Formnom", $("#Formnom").val());
-                       $('#selectionStation').html("Réservation à la station "
+                       $('#selectionStation').html("Votre vélo est réservé à la station "
                         + sessionStorage.getItem("nomStation") + " pour " + localStorage.getItem("Formprenom")
                         +" "
-                        + localStorage.getItem("Formnom"));
+                        + localStorage.getItem("Formnom")
+                        + " pendant ");
+                        
          				CountDownObj.timer(sessionStorage.getItem("distance"));
                          saisieValid = true;
                 }
@@ -162,15 +163,19 @@ Map.mymap.addLayer(Map.markers);//marker clusters
 	}, //fin valid
     //méthode de vérification de réservation pour si reservation en cours ou temps restant, nom station, et utlisateur ayant fait la réservation
     verifStation : function(){
-        if(localStorage.getItem("nomStation") == null) {
+        if(sessionStorage.getItem("nomStation") == null) {
             $("#selectionStation").html("Pas de réservation en cours");
         } else {
 
-                $("#selectionStation").html("<p>Réservation à la station</p> "
-                + localStorage.getItem("nomStation")
+                $("#Formnom").val(localStorage.getItem("Formnom"));
+                $("#Formprenom").val(localStorage.getItem("Formprenom"));
+                $("#selectionStation").html("<p>Votre vélo est réservé à la station</p> "
+                + sessionStorage.getItem("nomStation")
                 +" pour " + localStorage.getItem("Formprenom")
                 +" "
-                + localStorage.getItem("Formnom"));
+                + localStorage.getItem("Formnom")
+                + " pendant "+" ");
+                
 
             CountDownObj.timer(sessionStorage.getItem("distance"));
         }

@@ -17,13 +17,23 @@
 </head>
 
 <body>
-<div class = "header">
+
+<div id="header">
+  <div id="banner">
+    <img src="images/marseille.png" alt="Emblème Marseille">
+  </div>
   
-  <blockquote class="blockquote text-center">
-  <h1>
-	 LeVélo - Marseille</small>
-  </h1>
-</blockquote>
+  <nav id = "menu">
+    <ul class="menu_nav">
+      <li id ="home">
+        <a href="#slider">DÉCOUVRIR</a>
+      </li>
+      <li id ="resali">
+        <a href="#slider">RÉSERVER</a>
+      </li>
+    </ul>
+  </nav>
+
 </div>
 
 
@@ -32,43 +42,43 @@
     <div class="container">
         <h2>Vous cherchez un vélo ? Voila comment cela fonctionne</h2>
         <div class="mySlides">
-            <div><img src="images/Capture1.png" alt="capture écran etape 1">
+            <div><img src="images/vieux_port.jpg" alt="image bienvenue Vélov">
             </div>
             <div>
-                <h3><span>Etape 1</span></h3>
-                <p>3 différentes icones indiquent la disponibilités et le nombre de vélos restants.</p>
+                <h3><span>Bienvenue sur Vélove</span></h3>
+                <p>Réserver des vélos partout dans Marseille</p>
             </div>
         </div>
         <div class="mySlides">
             <div><img src="images/Capture2.png" alt="capture écran etape 2">
             </div>
             <div>
-                <h3><span>Etape 2</span></h3>
-                <p>Pour connaitre l'état et le nombre de vélos, cliquez sur une icône sur la carte</p>
+                <h3><span>Explorez la carte </span></h3>
+                <p>Cliquez sur un icône du plan</p>
             </div>
         </div>
         <div class="mySlides">
             <div><img src="images/Capture3.png" alt="capture écran etape 3">
             </div>
             <div>
-                <h3><span>Etape 3</span></h3>
-                <p>Dans le panneau "Informations sur la station" à droite de la carte, signez et cliquer sur "Inscription" afin d'ouvrir le panneau de réservation</p>
+                <h3><span>Combien de vélo ?</span></h3>
+                <p>Toutes les informations sont là</p>
             </div>
         </div>
         <div class="mySlides">
             <div><img src="images/Capture4.png" alt="capture écran etape 4">
             </div>
             <div>
-                <h3><span>Etape 4</span></h3>
-                <p>Compléter les informations demandées et réservez votre vélo</p>
+                <h3><span>Réservez</span></h3>
+                <p>En remplissant les informations</p>
             </div>
         </div>
         <div class="mySlides">
             <div><img src="images/Capture5.png" alt="capture écran etape 5">
             </div>
             <div>
-                <h3><span>Etape 5</span></h3>
-                <p>Votre réservation est valable pendant 20min avant confirmation, cliquer sur "Annuler" pour annuler votre réservation. Si vous décidez de réserver dans une autre station, cela annule automatiquement votre réservation précédente</p>
+                <h3><span>Profitez !</span></h3>
+                <p>On vous garde le vélo pendant 20 minutes</p>
             </div>
         </div>
     </div>
@@ -85,10 +95,7 @@
     <!--slider-->
 
 <!--/Boutons du slider-->
-<section id="booked">
-<div id = "selectionStation"></div>
-<div id="timer"></div>
-</section>
+
                     <!--/Slider-->
 
 <section id ="booked_map">
@@ -96,7 +103,7 @@
     <div id = "mapid"></div> <!--affichage map-->
       <div id="infoStation"> <!-- Cadre informations sur la station sélectionnée -->
 
-        <h2>Informations sur la station</h2>
+        <h2>Station selectionnée</h2>
 
                         <!-- Informations sur la station sélectionnée -->
         <ul id="listeInfo">
@@ -115,7 +122,10 @@
 
   </div>                   <!-- /Informations sur la station sélectionnée -->
 </section>
-
+<section id="booked">
+<div id = "selectionStation"></div>
+<div id="timer"></div>
+</section>
 <!--POP UP-->
 <a class="trigger_popup_fricc"></a>
 

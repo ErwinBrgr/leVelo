@@ -4,7 +4,7 @@
 
 
 var Slider = {
-    // Define current slide
+    // Définition du slide actuel. 0 par défaut donc première image
     currentIndex: 0,
 //initialisation méthodes de l'objet Slider
     init: function () {
@@ -20,7 +20,7 @@ var Slider = {
     // Méthode d'initialisation des images du slider
     activeSlide: function () {
         var slides = $('.mySlides'); //stockage en variable des images en class .mySlides
-        var slide = slides.eq(Slider.currentIndex);//selection l'élément et le stock
+        var slide = slides.eq(this.currentIndex);//selection l'élément et le stock
         slides.hide();//Permets de cacher les images du DOM
         slide.css('display', 'flex');//disposition des images les unes à coté des autres
     },
@@ -29,9 +29,9 @@ var Slider = {
     indexPlus: function () {
         var slides = $('.mySlides');//stoacke des images
         var slidesNumber = slides.length; 
-        Slider.currentIndex += 1; //on ajoute 1 à curentIndex
-        if (Slider.currentIndex > slidesNumber - 1) {
-            Slider.currentIndex = 0;
+        this.currentIndex += 1; //on ajoute 1 à curentIndex
+        if (this.currentIndex > slidesNumber - 1) {
+            this.currentIndex = 0;
         }
     },
 
@@ -39,9 +39,9 @@ var Slider = {
     indexMinus: function () {
         var slides = $('.mySlides');
         var slidesNumber = slides.length; //stockage en variable de la longueur d'image. Une image = 1
-        Slider.currentIndex -= 1;
-        if (Slider.currentIndex < 0) { //si inférieure à 0
-            Slider.currentIndex = slidesNumber - 1; // alors soustrait 1 à slidenumber
+        this.currentIndex -= 1;
+        if (this.currentIndex < 0) { //si inférieure à 0
+            this.currentIndex = slidesNumber - 1; // alors soustrait 1 à slidenumber
         }
     },
 
