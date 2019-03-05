@@ -1,4 +1,10 @@
-var Savnac = {
+/* ------------------------------------------------------------------------------ */
+/* --                          Compte à rebours                                -- */
+/* ------------------------------------------------------------------------------ */
+
+
+
+var Canvas = {
     // Attributs de référencement du contexte canvas et 2dcanvas
     canvas : "",
     ctx : "",
@@ -18,32 +24,31 @@ var Savnac = {
     buttonValider : document.getElementById("signUp"),
     // Configure le canevas et ajoute nos gestionnaires d'événements après le chargement de la page
 
-
     init : function() {
         // Récupère l'élément canvas spécifique du document HTML
         this.canvas = document.getElementById("newSignature");
         // Si le navigateur prend en charge la balise canvas, obtenez le contexte de dessin 2D pour cette toile
         if (this.canvas.getContext)
-            this.ctx = Savnac.canvas.getContext("2d");
+            this.ctx = Canvas.canvas.getContext("2d");
         // Vérifie que nous avons un contexte valide pour dessiner sur / avec avant d'ajouter des gestionnaires d'événement
         if (this.ctx) {
             // Réagir aux événements de la souris sur la toile, et mouseup sur l'ensemble du document
-            Savnac.canvas.addEventListener("mousedown", Savnac.sketchpad_mouseDown, false);
-            Savnac.canvas.addEventListener("mousemove", Savnac.sketchpad_mouseMove, false);
-            window.addEventListener("mouseup", Savnac.sketchpad_mouseUp, false);
+            Canvas.canvas.addEventListener("mousedown", Canvas.sketchpad_mouseDown, false);
+            Canvas.canvas.addEventListener("mousemove", Canvas.sketchpad_mouseMove, false);
+            window.addEventListener("mouseup", Canvas.sketchpad_mouseUp, false);
             // Réagir pour toucher les événements sur la toile
-            Savnac.canvas.addEventListener("touchstart", Savnac.sketchpad_touchstart, false);
-            Savnac.canvas.addEventListener("touchmove", Savnac.sketchpad_touchMove, false);
-            Savnac.canvas.addEventListener('touchend', Savnac.sketchpad_touchEnd, false);
+            Canvas.canvas.addEventListener("touchstart", Canvas.sketchpad_touchstart, false);
+            Canvas.canvas.addEventListener("touchmove", Canvas.sketchpad_touchMove, false);
+            Canvas.canvas.addEventListener('touchend', Canvas.sketchpad_touchEnd, false);
         }
     },
     // Dessine un point à une position spécifique sur le nom du canvas fournie
     // Les paramètres sont: Un contexte de canevas, la position x, la position y, la taille du point
     dessinLigne : function(ctx,x,y,size) {
         // Si lastX n'est pas défini, définissez lastX et lastY sur la position actuelle
-        if (Savnac.lastX==-1) {
-            Savnac.lastX=x;
-	    Savnac.lastY=y;
+        if (Canvas.lastX==-1) {
+            Canvas.lastX=x;
+	    Canvas.lastY=y;
         }
         // Utilisons le noir en définissant les valeurs RVB sur 0 et 255 alpha (complètement opaques)
         r=0; g=0; b=0; a=255;
@@ -55,7 +60,7 @@ var Savnac = {
         // Dessine une ligne remplie
         ctx.beginPath();
         // Tout d'abord, passe à l'ancienne (précédente) position
-	    ctx.moveTo(Savnac.lastX,Savnac.lastY);
+	    ctx.moveTo(Canvas.lastX,Canvas.lastY);
         // Dessine maintenant une ligne à la position actuelle du pointeur / contact
 	    ctx.lineTo(x,y);
         // Défini l'épaisseur du trait et tracer la ligne
@@ -63,33 +68,33 @@ var Savnac = {
         ctx.stroke();
         ctx.closePath();
         // Mettre à jour la dernière position pour référencer la position actuelle
-	    Savnac.lastX=x;
-	    Savnac.lastY=y;
+	    Canvas.lastX=x;
+	    Canvas.lastY=y;
     },
     // Garde la trace du bouton de la souris enfoncé et dessine un point à l'emplacement actuel
     sketchpad_mouseDown : function() {
-        Savnac.mouseDown=1;
-        Savnac.dessinLigne(Savnac.ctx,Savnac.mouseX,Savnac.mouseY,Savnac.lineThickness);
+        Canvas.mouseDown=1;
+        Canvas.dessinLigne(Canvas.ctx,Canvas.mouseX,Canvas.mouseY,Canvas.lineThickness);
     },
     // Conserve la position de la souris et dessine un point si le bouton de la souris est pressé
     sketchpad_mouseUp : function() {
-        Savnac.mouseDown=0;
-        Savnac.lastX=-1;
-        Savnac.lastY=-1;
+        Canvas.mouseDown=0;
+        Canvas.lastX=-1;
+        Canvas.lastY=-1;
     },
      sketchpad_touchEnd : function() {
          // Réinitialise lastX et lastY à -1 pour indiquer qu'ils sont maintenant invalides, puisque nous avons levé le "stylo"
-         Savnac.lastX=-1;
-         Savnac.lastY=-1;
+         Canvas.lastX=-1;
+         Canvas.lastY=-1;
     },
     // Dessine quelque chose et empêche le défilement par défaut lorsque le mouvement tactile est détecté
     sketchpad_mouseMove(e) {
         // Mettre à jour les coordonnées de la souris lorsqu'il est déplacé
-        Savnac.getMousePos(e);
+        Canvas.getMousePos(e);
         // Dessine un point si le bouton de la souris est pressé
-        if (Savnac.mouseDown==1){
-            Savnac.dessinLigne(Savnac.ctx,Savnac.mouseX,Savnac.mouseY,Savnac.lineThickness);
-            Savnac.buttonValider.style.display = 'inline-block';
+        if (Canvas.mouseDown==1){
+            Canvas.dessinLigne(Canvas.ctx,Canvas.mouseX,Canvas.mouseY,Canvas.lineThickness);
+            Canvas.buttonValider.style.display = 'inline-block';
         }
     },
     // Récupère la position actuelle de la souris par rapport à la partie supérieure gauche de la toile
@@ -97,29 +102,29 @@ var Savnac = {
         if (!e)
             var e = event;
         if (e.offsetX) {
-            Savnac.mouseX = e.offsetX;
-            Savnac.mouseY = e.offsetY;
+            Canvas.mouseX = e.offsetX;
+            Canvas.mouseY = e.offsetY;
         }
         else if (e.layerX) {
-            Savnac.mouseX = e.layerX;
-            Savnac.mouseY = e.layerY;
+            Canvas.mouseX = e.layerX;
+            Canvas.mouseY = e.layerY;
         }
     },
     // Dessine quelque chose quand un démarrage tactile est détecté
     sketchpad_touchstart : function() {
         // Mettre à jour les coordonnées tactiles
-        Savnac.getTouchPos();
-        Savnac.buttonValider.style.display = 'inline-block'
+        Canvas.getTouchPos();
+        Canvas.buttonValider.style.display = 'inline-block'
         // Empêche le déclenchement d'un événement mousedown supplémentaire
-        Savnac.dessinLigne(Savnac.ctx,Savnac.touchX,Savnac.touchY,Savnac.lineThickness);
+        Canvas.dessinLigne(Canvas.ctx,Canvas.touchX,Canvas.touchY,Canvas.lineThickness);
         event.preventDefault();
     },
     // Dessine quelque chose et empêche le défilement par défaut lorsque le mouvement tactile est détecté
     sketchpad_touchMove : function(e) {
         // Mettre à jour les coordonnées tactiles
-        Savnac.getTouchPos(e);
+        Canvas.getTouchPos(e);
         // Lors d'un événement touchmove, contrairement à un événement mousemove, il n'est pas nécessaire de vérifier si le toucher est activé, car il y aura toujours un contact avec l'écran par définition
-        Savnac.dessinLigne(Savnac.ctx,Savnac.touchX,Savnac.touchY,Savnac.lineThickness);
+        Canvas.dessinLigne(Canvas.ctx,Canvas.touchX,Canvas.touchY,Canvas.lineThickness);
         // Empêche le déclenchement d'un événement mousedown supplémentaire
         event.preventDefault();
     },
@@ -133,19 +138,19 @@ var Savnac = {
         if(e.touches) {
             if (e.touches.length == 1) { // Ne traite qu'avec un doigt
                 var touch = e.touches[0];// Récupère les informations pour le doigt # 1
-                Savnac.touchX=touch.pageX-touch.target.offsetLeft;
-                Savnac.touchY=touch.pageY-touch.target.offsetTop;
+                Canvas.touchX=touch.pageX-touch.target.offsetLeft;
+                Canvas.touchY=touch.pageY-touch.target.offsetTop;
             }
         }
     },
 };
 // Efface le contexte du canevas en utilisant la largeur et la hauteur du canevas
-    Savnac.clearCanvas.addEventListener("click", function() {
-    Savnac.ctx.clearRect(0, 0, Savnac.canvas.width, Savnac.canvas.height);
-    Savnac.buttonValider.style.display = 'none';
+    Canvas.clearCanvas.addEventListener("click", function() {
+    Canvas.ctx.clearRect(0, 0, Canvas.canvas.width, Canvas.canvas.height);
+    Canvas.buttonValider.style.display = 'none';
 })
 
-Savnac.init();
+Canvas.init();
 
 
 
