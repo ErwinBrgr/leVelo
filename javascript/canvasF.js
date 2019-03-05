@@ -13,22 +13,19 @@ var Canvas = {
     mouseY : 0,
     mouseDown : 0,
     // garde la trace de l’ancienne / dernière position lorsqu’on trace une ligne
-    // On le met à -1 au début pour indiquer que nous n'avons pas encore de valeur
-    lastX : -1,
-    lastY : -1,
+    lastX : -1,// On le met à -1 au début pour indiquer que nous n'avons pas encore de valeur
+    lastY : -1,// On le met à -1 au début pour indiquer que nous n'avons pas encore de valeur
     // Attributs pour garder la trace de la position tactile
     touchX : 0,
     touchY : 0,
-    lineThickness : 4,
+    lineThickness : 4, //Epaisseur du trait
     clearCanvas : document.getElementById("clearCanvasSimple"),
     buttonValider : document.getElementById("signUp"),
-    // Configure le canevas et ajoute nos gestionnaires d'événements après le chargement de la page
 
+    //Méthode d'initialisation et configuration du Canvas
     init : function() {
-        // Récupère l'élément canvas spécifique du document HTML
-        this.canvas = document.getElementById("newSignature");
-        // Si le navigateur prend en charge la balise canvas, obtenez le contexte de dessin 2D pour cette toile
-        if (this.canvas.getContext)
+        this.canvas = document.getElementById("newSignature");// Récupère l'élément canvas spécifique du document HTML
+        if (this.canvas.getContext) // Si le navigateur prend en charge la balise canvas, ctx 2d sur toile canvas
             this.ctx = Canvas.canvas.getContext("2d");
         // Vérifie que nous avons un contexte valide pour dessiner sur / avec avant d'ajouter des gestionnaires d'événement
         if (this.ctx) {
@@ -42,52 +39,44 @@ var Canvas = {
             Canvas.canvas.addEventListener('touchend', Canvas.sketchpad_touchEnd, false);
         }
     },
-    // Dessine un point à une position spécifique sur le nom du canvas fournie
-    // Les paramètres sont: Un contexte de canevas, la position x, la position y, la taille du point
+
+    //Méthode de dessin sur le canvas en passant le context les position xy et taille du point
     dessinLigne : function(ctx,x,y,size) {
         // Si lastX n'est pas défini, définissez lastX et lastY sur la position actuelle
         if (Canvas.lastX==-1) {
             Canvas.lastX=x;
 	    Canvas.lastY=y;
         }
-        // Utilisons le noir en définissant les valeurs RVB sur 0 et 255 alpha (complètement opaques)
-        r=0; g=0; b=0; a=255;
-        // Sélectionne un style de remplissage
-        ctx.strokeStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
-        // Défini le style de ligne "cap" pour arrondir afin que les lignes à des angles différents puissent se rejoindre
-        ctx.lineCap = "round";
-        //ctx.lineJoin = "round";
-        // Dessine une ligne remplie
-        ctx.beginPath();
-        // Tout d'abord, passe à l'ancienne (précédente) position
-	    ctx.moveTo(Canvas.lastX,Canvas.lastY);
-        // Dessine maintenant une ligne à la position actuelle du pointeur / contact
-	    ctx.lineTo(x,y);
-        // Défini l'épaisseur du trait et tracer la ligne
-        ctx.lineWidth = size;
+        r=0; g=0; b=0; a=255; //couleur noir pour le trait défini ici
+        ctx.strokeStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";// Style de remplissage avec couleur défini dans les var plus haut
+        ctx.lineCap = "round";// Défini le style "rond" pour en faire un point
+        ctx.beginPath();// Dessine une ligne remplie
+	    ctx.moveTo(Canvas.lastX,Canvas.lastY);  // Ancienne position du point
+	    ctx.lineTo(x,y);// Dessine maintenant une ligne à la position actuelle du pointeur / contact
+        ctx.lineWidth = size;// Défini l'épaisseur du trait et tracer la ligne
         ctx.stroke();
-        ctx.closePath();
+        ctx.closePath(); //arrêt du dessin
         // Mettre à jour la dernière position pour référencer la position actuelle
 	    Canvas.lastX=x;
 	    Canvas.lastY=y;
     },
-    // Garde la trace du bouton de la souris enfoncé et dessine un point à l'emplacement actuel
+    // Methode d'appel à dessinLigne lorsque le bouton de la souris est en bas.
     sketchpad_mouseDown : function() {
         Canvas.mouseDown=1;
         Canvas.dessinLigne(Canvas.ctx,Canvas.mouseX,Canvas.mouseY,Canvas.lineThickness);
     },
-    // Conserve la position de la souris et dessine un point si le bouton de la souris est pressé
+    // Méthode de conservation de la position de la souris
     sketchpad_mouseUp : function() {
         Canvas.mouseDown=0;
         Canvas.lastX=-1;
         Canvas.lastY=-1;
     },
      sketchpad_touchEnd : function() {
-         // Réinitialise lastX et lastY à -1 pour indiquer qu'ils sont maintenant invalides, puisque nous avons levé le "stylo"
+         // Methode de réinitialisation axes X et Y. L'écran n'est plus préssé, donc fin du dessin
          Canvas.lastX=-1;
          Canvas.lastY=-1;
     },
-    // Dessine quelque chose et empêche le défilement par défaut lorsque le mouvement tactile est détecté
+    // Methode de dessins tactile. empêche le défilement par défaut lorsque le mouvement tactile est détecté
     sketchpad_mouseMove(e) {
         // Mettre à jour les coordonnées de la souris lorsqu'il est déplacé
         Canvas.getMousePos(e);
