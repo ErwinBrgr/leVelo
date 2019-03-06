@@ -237,6 +237,13 @@ nav a:hover{
     margin-bottom : 2%;
 }
 
+#cancelBooking
+{
+    display : none;
+    text-align : center;
+    margin: auto;
+}
+
 /*Popup box slider BEGIN*/
 
 .hover_bkgr_slider{
