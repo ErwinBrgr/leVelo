@@ -18,12 +18,13 @@ var Map = {
 
     //initialisation des méthodes de l'objet
     init : function() {
-            Map.mapMethod();
-            Map.getMarkers();
-            Map.verifStation();
-            Map.signUpM();
-            Map.closeB();
-            Map.validResa();
+            this.mapMethod();
+            this.getMarkers();
+            this.verifStation();
+            this.signUpM();
+            this.closeB();
+            this.validResa();
+            this.clearBooking();
 
     },
     //méthode de récupération de la carte
@@ -149,8 +150,7 @@ Map.mymap.addLayer(Map.markers);//marker clusters
                        $('#selectionStation').html("Votre vélo est réservé à la station "
                         + sessionStorage.getItem("nomStation") + " pour " + localStorage.getItem("Formprenom")
                         +" "
-                        + localStorage.getItem("Formnom")
-                        + " pendant ");
+                        + localStorage.getItem("Formnom"));
                         
          				CountDownObj.timer(sessionStorage.getItem("distance"));
                          saisieValid = true;
@@ -173,22 +173,28 @@ Map.mymap.addLayer(Map.markers);//marker clusters
                 + sessionStorage.getItem("nomStation")
                 +" pour " + localStorage.getItem("Formprenom")
                 +" "
-                + localStorage.getItem("Formnom")
-                + " pendant "+" ");
+                + localStorage.getItem("Formnom"));
                 
 
             CountDownObj.timer(sessionStorage.getItem("distance"));
+                $("#cancelBooking").show();
         }
 
     },
 
-    //***Méthode de contrôle des fonctionnalités de la carte
-
-    //méthode permettant de remettre à zero les sessions storage
-    clearStor : function(){
-        var clearC =$("#clearCanvasSimple");
-        clearC.click(sessionStorage.clear(),localStorage.clear());
-    },
+    
+    clearBooking : function(){
+        var clearB =$("#cancelBooking");
+        clearB.click(function(){
+            console.log("test");
+            sessionStorage.clear();
+            localStorage.clear();
+            $("#selectionStation").html("Pas de réservation en cours");
+            CountDownObj.clearInt();
+            Canvas.ctx.clearRect(0, 0, Canvas.canvas.width, Canvas.canvas.height);
+            $("#timer").hide();
+        });
+    },    
     //methode permettant la validation de la signature
     signUpM : function(){
         var sUp = $('#signUp');
@@ -209,7 +215,7 @@ Map.mymap.addLayer(Map.markers);//marker clusters
         validR.click(function(){
             if(Map.valid() ){
                  CountDownObj.timer();
-                 $('.hover_bkgr_fricc').html('<p>Réservation prise en compte !</p>');
+                 $("#timer").show();
                  $('.hover_bkgr_fricc').fadeOut(3000, function() {
                                   });
 
