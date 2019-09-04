@@ -163,7 +163,7 @@ nav a:hover{
 
 #mapid
 {
-    height : 680px;
+    height : 780px;
     width: 90%;
     margin-left : 5%;
     border: solid black 1px;
@@ -184,7 +184,7 @@ nav a:hover{
 {
     display : none;
     width: 29%;
-    height : 680px;
+    height : 780px;
     margin-left:1%;
     background-color: #f8f9fa;
     border : 1px solid black;
