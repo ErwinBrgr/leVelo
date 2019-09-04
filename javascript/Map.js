@@ -103,6 +103,7 @@ var Map = {
                     $("#veloDispo").html(station.available_bikes); //affichage de nombre de de vélos disponible
                     $("#attacheDispo").html(station.available_bike_stands);
                     $("#canvas").show();
+                    $("#clearCanvasSimple").show()
                      //affichage du nombre d'attache dispo
                 }
             });
@@ -152,7 +153,6 @@ Map.mymap.addLayer(Map.markers);//marker clusters
                         +" "
                         + localStorage.getItem("Formnom"));
                         
-         				CountDownObj.timer(sessionStorage.getItem("distance"));
                          saisieValid = true;
                 }
 
@@ -165,6 +165,8 @@ Map.mymap.addLayer(Map.markers);//marker clusters
     verifStation : function(){
         if(sessionStorage.getItem("nomStation") == null) {
             $("#selectionStation").html("Pas de réservation en cours");
+            $("#Formnom").val(localStorage.getItem("Formnom"));
+            $("#Formprenom").val(localStorage.getItem("Formprenom"));
         } else {
 
                 $("#Formnom").val(localStorage.getItem("Formnom"));
@@ -193,6 +195,7 @@ Map.mymap.addLayer(Map.markers);//marker clusters
             CountDownObj.clearInt();
             Canvas.ctx.clearRect(0, 0, Canvas.canvas.width, Canvas.canvas.height);
             $("#timer").hide();
+            $("#clearCanvasSimple").hide()
         });
     },    
     //methode permettant la validation de la signature
@@ -215,6 +218,7 @@ Map.mymap.addLayer(Map.markers);//marker clusters
         validR.click(function(){
             if(Map.valid() ){
                  CountDownObj.timer();
+                 $("#cancelBooking").show();
                  $("#timer").show();
                  $('.hover_bkgr_fricc').fadeOut(3000, function() {
                                   });

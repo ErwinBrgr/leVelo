@@ -35,20 +35,15 @@ var CountDownObj  = {
 
 	},
 //cette méthode initialise le timer avec un interval de 1 secs (1000 millisecondes)
-	timer : function(distance = 1200000 ){ //mise en parametre de 20 mins en millisecondes d
+	timer : function(distance = 12000000 ){ //mise en parametre de 20 mins en millisecondes d
 		CountDownObj.distance = distance;
 		CountDownObj.countDownDate = new Date().getTime() + parseInt(distance); // date du jour + 20mins 
-		setInterval(CountDownObj.ct,1000);//définition de l'interval 1000 millisecondes pour 1sec
+		CountDownObj.interval = window.setInterval(this.ct,1000);//définition de l'interval 1000 millisecondes pour 1sec
 
 	},
 
 	clearInt : function(){
-		 clearInterval(this.interval);
+		 clearInterval(CountDownObj.interval);
 		 
 	}
 };
-
-//déclanchement du timer au clic
-$('#valid').on('click', function(){
-    CountDownObj.timer();
-});
